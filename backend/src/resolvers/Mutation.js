@@ -1,9 +1,10 @@
 import bcrypt from "bcrypt";
+import { uuid } from "uuidv4";
 const saltRounds = 8787;
 
 const Mutation = {
-  async createUser(parent, args, { db, pubsub }, info) {
-    const user = await db.users.findOne({ name: args.data.name });
+  async createUser(parent, { data }, { userModel, pubsub }, info) {
+    const user = await userModel.findOne({ name: data.name });
 
     if (user) {
       return {
@@ -12,24 +13,21 @@ const Mutation = {
       };
     }
 
-    args.data.password = await bcrypt.hash(args.data.password, saltRounds);
-
-    let newuser = await new db.users(args.data).save();
-
-    pubsub.publish(`User`, {
-      user: {
-        mutation: "CREATED",
-        data: newuser,
-      },
-    });
+    data.password = await bcrypt.hash(data.password, saltRounds);
+    newuserinfo = {
+      id: uuid(),
+      ...data,
+      scores: {},
+    };
+    let newuser = await new userModel(newuserinfo).save();
 
     return {
       ok: true,
       user: newuser,
     };
   },
-  async loginUser(parent, args, { db }, info) {
-    const user = await db.users.findOne({ name: args.data.name });
+  async loginUser(parent, { data }, { userModel, pubsub }, info) {
+    const user = await userModel.findOne({ name: data.name });
 
     if (!user) {
       return {
@@ -38,7 +36,7 @@ const Mutation = {
       };
     }
 
-    const pass = await bcrypt.compare(args.data.password, user.password);
+    const pass = await bcrypt.compare(data.password, user.password);
 
     if (!pass) {
       return {
@@ -49,9 +47,47 @@ const Mutation = {
 
     return {
       ok: true,
-      name: user.name,
+      user: user,
+    };
+  },
+  async updateUser(parent, { data }, { userModel, pubsub }, info) {
+    const user = await userModel.findOne({ name: data.name });
+
+    if (!user) {
+      return {
+        ok: false,
+        error: "User doesn't exist",
+      };
+    }
+
+    const userupdated = await userModel.findOneAndUpdate(
+      { name: data.name },
+      { $set: { [`scores.${data.game}`]: data.score } },
+      {
+        new: true,
+        upsert: true,
+        strict: false,
+      }
+    );
+
+    const users = await userModel
+      .find({
+        [`scores.${args.game}`]: { $exists: true },
+      })
+      .sort({ [`scores.${args.game}`]: -1 });
+
+    pubsub.publish(`${data.game}`, {
+      userUpdated: {
+        mutation: "UPDATED",
+        data: users,
+      },
+    });
+
+    return {
+      ok: true,
+      user: userupdated,
     };
   },
 };
 
-export { Mutation as default };
+export default Mutation;

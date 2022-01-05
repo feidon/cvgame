@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { dataInit } from "./upload.js";
+import { dataInit } from "./upload";
 
 import "dotenv-defaults/config.js";
 

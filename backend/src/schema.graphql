@@ -19,8 +19,7 @@ type Mutation {
 
 # See resolvers/Subscription.js
 type Subscription {
-  taskCreated: UserSubscriptionPayload!
-  taskUpdated: UserSubscriptionPayload!
+  userUpdated(game: String!): UserSubscriptionPayload!
 }
 
 # Input for creating a user
@@ -42,7 +41,6 @@ type UserResponse {
 }
 
 enum MutationType {
-  CREATED
   UPDATED
 }
 

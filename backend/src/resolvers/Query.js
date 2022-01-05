@@ -1,7 +1,4 @@
 const Query = {
-  /**
-   * Get all tasks
-   */
   users: async (parent, args, { userModel }) => {
     const users = await userModel
       .find({

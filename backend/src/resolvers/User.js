@@ -5,4 +5,4 @@ const User = {
   // },
 };
 
-export { User as default };
+export default User;
