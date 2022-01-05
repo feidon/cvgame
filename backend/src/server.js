@@ -2,6 +2,7 @@ import { GraphQLServer, PubSub } from "graphql-yoga";
 import Query from "./resolvers/Query";
 import Mutation from "./resolvers/Mutation";
 import User from "./resolvers/User";
+import Score from "./resolvers/Score";
 import Subscription from "./resolvers/Subscription";
 import userModel from "./models/user";
 
@@ -13,6 +14,7 @@ const server = new GraphQLServer({
     Mutation,
     Subscription,
     User,
+    Score,
   },
   context: {
     userModel,

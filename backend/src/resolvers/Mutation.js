@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 const saltRounds = 10;
 
 const Mutation = {
-  async createUser(parent, { data }, { userModel, pubsub }, info) {
+  async createUser(parent, { data }, { userModel, pubSub }, info) {
     const user = await userModel.findOne({ name: data.name });
 
     if (user) {
@@ -26,7 +26,7 @@ const Mutation = {
       user: newuser,
     };
   },
-  async loginUser(parent, { data }, { userModel, pubsub }, info) {
+  async loginUser(parent, { data }, { userModel, pubSub }, info) {
     const user = await userModel.findOne({ name: data.name });
 
     if (!user) {
@@ -50,7 +50,7 @@ const Mutation = {
       user: user,
     };
   },
-  async updateUser(parent, { data }, { userModel, pubsub }, info) {
+  async updateUser(parent, { data }, { userModel, pubSub }, info) {
     const user = await userModel.findOne({ name: data.name });
 
     if (!user) {
@@ -72,11 +72,12 @@ const Mutation = {
 
     const users = await userModel
       .find({
-        [`scores.${args.game}`]: { $exists: true },
+        [`scores.${data.game}`]: { $exists: true },
       })
-      .sort({ [`scores.${args.game}`]: -1 });
+      .select({ id: 1, name: 1, [`scores.${data.game}`]: 1 })
+      .sort({ [`scores.${data.game}`]: -1 });
 
-    pubsub.publish(`${data.game}`, {
+    pubSub.publish(`${data.game}`, {
       userUpdated: {
         mutation: "UPDATED",
         data: users,

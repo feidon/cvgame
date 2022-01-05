@@ -1,7 +1,7 @@
 const Subscription = {
   userUpdated: {
     subscribe: (parent, args, { pubSub }) => {
-      return pubSub.asyncIterator(`${args.data.game}`);
+      return pubSub.asyncIterator(`${args.game}`);
     },
   },
 };
