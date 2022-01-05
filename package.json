@@ -1,0 +1,12 @@
+{
+  "name": "Playground",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/feidon/Playground.git",
+  "author": "Yu-Hsuan Fei <r09521515@ntu.edu.tw>",
+  "license": "MIT",
+  "scripts": {
+    "frontend": "cd ./frontend && npm start",
+    "backend": "cd ./backend && npm start"
+  }
+}
