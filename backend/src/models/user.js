@@ -17,7 +17,7 @@ const UserSchema = new mongoose.Schema({
     required: [true, "Password field is required."],
   },
   scores: {
-    type: Schema.Types.Mixed,
+    type: mongoose.Schema.Types.Mixed,
     required: [true, "id field is required."],
   },
 });

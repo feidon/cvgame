@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
-import { uuid } from "uuidv4";
-const saltRounds = 8787;
+import { v4 as uuidv4 } from "uuid";
+const saltRounds = 10;
 
 const Mutation = {
   async createUser(parent, { data }, { userModel, pubsub }, info) {
@@ -14,8 +14,8 @@ const Mutation = {
     }
 
     data.password = await bcrypt.hash(data.password, saltRounds);
-    newuserinfo = {
-      id: uuid(),
+    let newuserinfo = {
+      id: uuidv4(),
       ...data,
       scores: {},
     };

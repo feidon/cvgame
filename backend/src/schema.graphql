@@ -5,24 +5,20 @@ type User {
   scores: [String!]
 }
 
-# See resolvers/Query.js
 type Query {
   users(game: String!): [User!]!
 }
 
-# See resolvers/Mutation.js
 type Mutation {
   createUser(data: CreateUserInput!): UserResponse!
   loginUser(data: CreateUserInput!): UserResponse!
   updateUser(data: UpdateUserInput!): UserResponse!
 }
 
-# See resolvers/Subscription.js
 type Subscription {
   userUpdated(game: String!): UserSubscriptionPayload!
 }
 
-# Input for creating a user
 input CreateUserInput {
   name: String!
   password: String!
