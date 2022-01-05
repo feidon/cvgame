@@ -2,9 +2,13 @@ const Query = {
   /**
    * Get all tasks
    */
-  tasks: async (parent, args, { taskModel }) => {
-    const tasks = await taskModel.find().sort({ dueDate: -1 });
-    return tasks;
+  users: async (parent, args, { userModel }) => {
+    const users = await userModel
+      .find({
+        [`scores.${args.game}`]: { $exists: true },
+      })
+      .sort({ [`scores.${args.game}`]: -1 });
+    return users;
   },
 };
 

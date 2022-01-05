@@ -1,48 +1,57 @@
-const Mutation = {
-  /**
-   * Add a task
-   */
-  createTask: async (parent, { input }, { taskModel, pubSub }) => {
-    const newTask = new taskModel(input);
-    await newTask.save();
-    pubSub.publish("TASK_CREATED", {
-      taskCreated: newTask,
-    });
-    return newTask;
-  },
-  /**
-   * Update a task's status by its id
-   */
-  updateTask: async (parent, { id, status }, { taskModel, pubSub }) => {
-    const task = await taskModel.findOneAndUpdate(
-      { id },
-      {
-        $set: {
-          id,
-          status,
-        },
-      },
-      { returnDocument: "after" }
-    );
-    pubSub.publish("TASK_UPDATED", {
-      taskUpdated: task,
-    });
-    return task;
-  },
-  /**
-   * Delete a task by id
-   */
-  // TODO 5.2 Add a deleteTask function to resolve deleteTask
-  deleteTask: async (parent, { id }, { taskModel, pubSub }) => {
-    const task = await taskModel.findOne({ id: id });
-    if (task) await taskModel.deleteOne({ id: id });
-    pubSub.publish("TASK_DELETED", {
-      taskDeleted: task.id,
-    });
-    return task.id;
-  },
+import bcrypt from "bcrypt";
+const saltRounds = 8787;
 
-  // TODO 6.3 Add Subscription
+const Mutation = {
+  async createUser(parent, args, { db, pubsub }, info) {
+    const user = await db.users.findOne({ name: args.data.name });
+
+    if (user) {
+      return {
+        ok: false,
+        error: "User exist",
+      };
+    }
+
+    args.data.password = await bcrypt.hash(args.data.password, saltRounds);
+
+    let newuser = await new db.users(args.data).save();
+
+    pubsub.publish(`User`, {
+      user: {
+        mutation: "CREATED",
+        data: newuser,
+      },
+    });
+
+    return {
+      ok: true,
+      user: newuser,
+    };
+  },
+  async loginUser(parent, args, { db }, info) {
+    const user = await db.users.findOne({ name: args.data.name });
+
+    if (!user) {
+      return {
+        ok: false,
+        error: "User doesn't exist",
+      };
+    }
+
+    const pass = await bcrypt.compare(args.data.password, user.password);
+
+    if (!pass) {
+      return {
+        ok: false,
+        error: "Wrong password",
+      };
+    }
+
+    return {
+      ok: true,
+      name: user.name,
+    };
+  },
 };
 
-export default Mutation;
+export { Mutation as default };

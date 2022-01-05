@@ -1,55 +1,52 @@
-# Date type. See resolvers/Date.js
-scalar Date
-
-# Status of a task. See resolvers/Status.js.
-enum Status {
-  TODO
-  INPROGRESS
-  DONE
-}
-
-# A task will have an id, title, content, dueDate and status
-type Task {
+type User {
   id: ID!
-  title: String!
-  content: String!
-  dueDate: Date! # use scalar Date above
-  status: Status! # use enum Status above
+  name: String!
+  password: String!
+  scores: [String!]
 }
 
 # See resolvers/Query.js
 type Query {
-  # Get all tasks
-  tasks: [Task!]!
+  users(game: String!): [User!]!
 }
 
 # See resolvers/Mutation.js
 type Mutation {
-  # Create a task
-  createTask(input: CreateTaskInput!): Task
-  # Update a task's status
-  updateTask(id: ID!, status: Status!): Task
-  # Delete a task
-  # TODO 5.1 Add the deleteTask function
-  deleteTask(id: ID!): ID!
-}
-
-# Input for creating a task
-input CreateTaskInput {
-  id: ID!
-  title: String!
-  content: String!
-  dueDate: Date!
-  status: Status!
+  createUser(data: CreateUserInput!): UserResponse!
+  loginUser(data: CreateUserInput!): UserResponse!
+  updateUser(data: UpdateUserInput!): UserResponse!
 }
 
 # See resolvers/Subscription.js
 type Subscription {
-  # Notify a task created
-  taskCreated: Task!
-  # Notify a task updated
-  taskUpdated: Task!
-  # Notify a task deleted
-  # TODO 6.1 Add the taskDeleted subscription
-  taskDeleted: ID!
+  taskCreated: UserSubscriptionPayload!
+  taskUpdated: UserSubscriptionPayload!
+}
+
+# Input for creating a user
+input CreateUserInput {
+  name: String!
+  password: String!
+}
+
+input UpdateUserInput {
+  name: String!
+  game: String!
+  score: String!
+}
+
+type UserResponse {
+  ok: Boolean!
+  user: User
+  error: String
+}
+
+enum MutationType {
+  CREATED
+  UPDATED
+}
+
+type UserSubscriptionPayload {
+  mutation: MutationType!
+  data: [User]
 }

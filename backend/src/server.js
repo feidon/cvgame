@@ -3,11 +3,10 @@ import { GraphQLServer, PubSub } from "graphql-yoga";
 // resolvers
 import Query from "./resolvers/Query.js";
 import Mutation from "./resolvers/Mutation.js";
-import DateResolver from "./resolvers/Date.js";
-import StatusResolver from "./resolvers/Status.js";
+import User from "./resolvers/User.js";
 import Subscription from "./resolvers/Subscription.js";
 // db
-import taskModel from "./models/task.js";
+import userModel from "./models/user.js";
 
 const pubSub = new PubSub();
 const server = new GraphQLServer({
@@ -16,11 +15,10 @@ const server = new GraphQLServer({
     Query,
     Mutation,
     Subscription,
-    Date: DateResolver,
-    Status: StatusResolver,
+    User,
   },
   context: {
-    taskModel,
+    userModel,
     pubSub,
   },
 });
