@@ -15,9 +15,9 @@ type Query {
 }
 
 type Mutation {
-  createUser(data: CreateUserInput!): UserResponse!
-  loginUser(data: CreateUserInput!): UserResponse!
-  updateUser(data: UpdateUserInput!): UserResponse!
+  createUser(data: CreateUserInput!): CreateResponse!
+  loginUser(data: CreateUserInput!): LoginResponse!
+  updateUser(data: UpdateUserInput!): UpdateResponse!
 }
 
 type Subscription {
@@ -35,7 +35,19 @@ input UpdateUserInput {
   score: Int!
 }
 
-type UserResponse {
+type CreateResponse {
+  ok: Boolean!
+  user: User
+  error: String
+}
+
+type LoginResponse {
+  ok: Boolean!
+  user: User
+  error: String
+}
+
+type UpdateResponse {
   ok: Boolean!
   user: User
   error: String

@@ -1,9 +1,11 @@
 import bcrypt from "bcrypt";
 import { v4 as uuidv4 } from "uuid";
-const saltRounds = 10;
+// const saltRounds = 10;
+// const secret = "ji_ji_tai_da_le";
 
 const Mutation = {
-  async createUser(parent, { data }, { userModel, pubSub }, info) {
+  async createUser(parent, { data }, { saltRounds, userModel }, info) {
+    // if (!me) throw new Error("Plz Log In First");
     const user = await userModel.findOne({ name: data.name });
 
     if (user) {
@@ -26,7 +28,7 @@ const Mutation = {
       user: newuser,
     };
   },
-  async loginUser(parent, { data }, { userModel, pubSub }, info) {
+  async loginUser(parent, { data }, { userModel }, info) {
     const user = await userModel.findOne({ name: data.name });
 
     if (!user) {
@@ -75,7 +77,7 @@ const Mutation = {
         [`scores.${data.game}`]: { $exists: true },
       })
       .select({ id: 1, name: 1, [`scores.${data.game}`]: 1 })
-      .sort({ [`scores.${data.game}`]: -1 });
+      .sort({ [`scores.${data.game}`]: 1 });
 
     pubSub.publish(`${data.game}`, {
       userUpdated: {

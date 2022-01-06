@@ -4,7 +4,7 @@ const Query = {
       .find({
         [`scores.${args.game}`]: { $exists: true },
       })
-      .sort({ [`scores.${args.game}`]: -1 });
+      .sort({ [`scores.${args.game}`]: 1 });
     return users;
   },
 };
