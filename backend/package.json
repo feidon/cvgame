@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
+    "graphql-scalars": "^1.14.1",
     "graphql-yoga": "^1.18.3",
     "jsonwebtoken": "^8.5.1",
     "nodemon": "^2.0.15",

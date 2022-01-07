@@ -2,17 +2,39 @@ import { useState, useEffect } from "react";
 import { useQuery } from "@apollo/client";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
+import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import { Link } from "react-router-dom";
 import { USER_QUERY, USER_SUBSCRIPTION } from "../graphql";
 import { FINGER_EXERCISE, FINGER_MATH, FINGER_MORA, POSE } from "../constants";
+
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  [`&.${tableCellClasses.head}`]: {
+    backgroundColor: theme.palette.common.black,
+    color: theme.palette.common.white,
+  },
+  [`&.${tableCellClasses.body}`]: {
+    fontSize: 14,
+  },
+}));
+
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  "&:nth-of-type(odd)": {
+    backgroundColor: theme.palette.action.hover,
+  },
+  // hide last border
+  "&:last-child td, &:last-child th": {
+    border: 0,
+  },
+}));
 
 const TabPanel = (props) => {
   const { value, index, ...other } = props;
@@ -25,16 +47,18 @@ const TabPanel = (props) => {
   useEffect(() => {
     subscribeToMore({
       document: USER_SUBSCRIPTION,
+      variables: { game: index },
       updateQuery: (prev, { subscriptionData }) => {
         if (!subscriptionData.data) return prev;
-        console.log(subscriptionData.data);
-        return {};
+        // console.log(prev);
+        return { users: subscriptionData.data.userUpdated.data };
       },
     });
   });
 
   if (loading) return <Box>Loading...</Box>;
   if (error) return <Box>Error! ${error.message}</Box>;
+  if (data) console.log(data);
   return (
     <div
       role="tabpanel"
@@ -47,19 +71,24 @@ const TabPanel = (props) => {
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
-              <TableRow>
-                <TableCell align="center">Name</TableCell>
-                <TableCell align="center">Time</TableCell>
-              </TableRow>
+              <StyledTableRow>
+                <StyledTableCell align="center">Name</StyledTableCell>
+                <StyledTableCell align="center">Time</StyledTableCell>
+              </StyledTableRow>
             </TableHead>
             <TableBody>
               {data.users.map(({ name, scores }) => (
-                <TableRow key={name}>
-                  <TableCell align="center">{name}</TableCell>
-                  <TableCell align="center">
-                    {scores.filter((e) => e === index).score}
-                  </TableCell>
-                </TableRow>
+                <StyledTableRow
+                  key={name}
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                >
+                  <StyledTableCell align="center">{name}</StyledTableCell>
+                  <StyledTableCell align="center">
+                    {scores.map((e) => {
+                      return e.game === index ? e.score : null;
+                    })}
+                  </StyledTableCell>
+                </StyledTableRow>
               ))}
             </TableBody>
           </Table>
@@ -70,24 +99,62 @@ const TabPanel = (props) => {
 };
 
 const LeaderBoard = (props) => {
-  const [tabvalue, setTab] = useState("");
+  const [tabvalue, setTab] = useState(FINGER_MORA);
 
-  const handleChange = (val) => {
-    setTab(tabvalue);
+  const handleChange = (event, newValue) => {
+    setTab(newValue);
   };
 
   return (
-    <Box>
-      <Tabs value={tabvalue} onChange={handleChange}>
-        <Tab value={FINGER_MORA} label={FINGER_MORA} />
-        <Tab value={FINGER_MATH} label={FINGER_MATH} />
-        <Tab value={POSE} label={POSE} />
-        <Tab value={FINGER_EXERCISE} label={FINGER_EXERCISE} />
-      </Tabs>
-      <TabPanel value={tabvalue} index={FINGER_MORA} />
-      <TabPanel value={tabvalue} index={FINGER_MATH} />
-      <TabPanel value={tabvalue} index={POSE} />
-      <TabPanel value={tabvalue} index={FINGER_EXERCISE} />
+    <Box
+      sx={{
+        display: "flex",
+        // justifyContent: "center",
+        // alignItems: "center",
+      }}
+    >
+      <Box
+        sx={{
+          width: "10%",
+          height: "50px",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Button
+          variant="contained"
+          component={Link}
+          to="/login/:username/lobby"
+        >
+          Back
+        </Button>
+      </Box>
+      <Box
+        sx={{
+          width: "80%",
+          // margin: "0 auto",
+        }}
+      >
+        <Tabs
+          value={tabvalue}
+          onChange={handleChange}
+          variant="fullWidth"
+          // sx={{
+          //   width: "80%",
+          //   margin: "0 auto",
+          // }}
+        >
+          <Tab value={FINGER_MORA} label={FINGER_MORA} />
+          <Tab value={FINGER_MATH} label={FINGER_MATH} />
+          <Tab value={POSE} label={POSE} />
+          <Tab value={FINGER_EXERCISE} label={FINGER_EXERCISE} />
+        </Tabs>
+        <TabPanel value={tabvalue} index={FINGER_MORA} />
+        <TabPanel value={tabvalue} index={FINGER_MATH} />
+        <TabPanel value={tabvalue} index={POSE} />
+        <TabPanel value={tabvalue} index={FINGER_EXERCISE} />
+      </Box>
     </Box>
   );
 };
