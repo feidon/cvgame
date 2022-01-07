@@ -77,7 +77,8 @@ const Mutation = {
         [`scores.${data.game}`]: { $exists: true },
       })
       .select({ id: 1, name: 1, [`scores.${data.game}`]: 1 })
-      .sort({ [`scores.${data.game}`]: 1 });
+      .sort({ [`scores.${data.game}`]: 1 })
+      .limit(30);
 
     pubSub.publish(`${data.game}`, {
       userUpdated: {

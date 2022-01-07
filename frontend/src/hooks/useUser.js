@@ -50,6 +50,8 @@ const useUser = () => {
     return () => clearInterval(interval);
   }, [timerOn]);
 
+  // handle user data change:
+  // input : Object key, Object value
   const handleChangeUserData = (key, value) => {
     setDisplayError(false);
     if (key === "username" || key === "password") {
@@ -65,6 +67,7 @@ const useUser = () => {
     }
   };
 
+  // after click sign up button
   const handleCreate = () => {
     if (Object.values(UserData).some((v) => !v)) {
       setDisplayError(true);
@@ -83,6 +86,7 @@ const useUser = () => {
     });
   };
 
+  // after click login button
   const handleLogin = () => {
     if (!UserData.username || !UserData.password) {
       setDisplayError(true);
@@ -107,6 +111,7 @@ const useUser = () => {
     });
   };
 
+  // after finish the game
   const handleUpdate = () => {
     UpdateMutation({
       variables: {
