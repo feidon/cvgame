@@ -12,8 +12,9 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { Link } from "react-router-dom";
 import { USER_QUERY, USER_SUBSCRIPTION } from "../graphql";
+
+// Use these as game name
 import { FINGER_EXERCISE, FINGER_MATH, FINGER_MORA, POSE } from "../constants";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -30,7 +31,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   "&:nth-of-type(odd)": {
     backgroundColor: theme.palette.action.hover,
   },
-  // hide last border
   "&:last-child td, &:last-child th": {
     border: 0,
   },
@@ -50,7 +50,6 @@ const TabPanel = (props) => {
       variables: { game: index },
       updateQuery: (prev, { subscriptionData }) => {
         if (!subscriptionData.data) return prev;
-        // console.log(prev);
         return { users: subscriptionData.data.userUpdated.data };
       },
     });
@@ -109,8 +108,6 @@ const LeaderBoard = (props) => {
     <Box
       sx={{
         display: "flex",
-        // justifyContent: "center",
-        // alignItems: "center",
       }}
     >
       <Box
@@ -124,8 +121,7 @@ const LeaderBoard = (props) => {
       >
         <Button
           variant="contained"
-          component={Link}
-          to="/login/:username/lobby"
+          href={`/login/${props.UserData.username}/lobby`}
         >
           Back
         </Button>
@@ -133,18 +129,9 @@ const LeaderBoard = (props) => {
       <Box
         sx={{
           width: "80%",
-          // margin: "0 auto",
         }}
       >
-        <Tabs
-          value={tabvalue}
-          onChange={handleChange}
-          variant="fullWidth"
-          // sx={{
-          //   width: "80%",
-          //   margin: "0 auto",
-          // }}
-        >
+        <Tabs value={tabvalue} onChange={handleChange} variant="fullWidth">
           <Tab value={FINGER_MORA} label={FINGER_MORA} />
           <Tab value={FINGER_MATH} label={FINGER_MATH} />
           <Tab value={POSE} label={POSE} />

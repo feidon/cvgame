@@ -7,7 +7,6 @@ import {
 import { useMutation } from "@apollo/react-hooks";
 import { useNavigate } from "react-router-dom";
 import { astFromValue } from "graphql";
-const navigate = useNavigate();
 
 const LOCALSTORAGE_KEY = "save-me";
 
@@ -33,6 +32,8 @@ const useUser = () => {
   // game time start
   const [timerOn, setTimerOn] = useState(false);
 
+  const navigate = useNavigate();
+
   // time count : you can direct set variable like this:
   // setTimerOn(true)  => Start
   // setTimerOn(false) => Stop
@@ -55,8 +56,8 @@ const useUser = () => {
   const handleChangeUserData = (key, value) => {
     setDisplayError(false);
     if (key === "username" || key === "password") {
-      setFormData({
-        ...formData,
+      setUserData({
+        ...UserData,
         [key]: value,
       });
     } else {
@@ -122,6 +123,12 @@ const useUser = () => {
     });
   };
 
+  const handleLogout = async () => {
+    await localStorage.clear();
+    await setUserData(initUser);
+    navigate("/login");
+  };
+
   return {
     UserData,
     game,
@@ -135,6 +142,7 @@ const useUser = () => {
     handleCreate,
     handleLogin,
     handleUpdate,
+    handleLogout,
   };
 };
 
