@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useQuery } from "@apollo/client";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
@@ -13,6 +13,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { USER_QUERY, USER_SUBSCRIPTION } from "../graphql";
+import { UserContext } from "./App";
 
 // Use these as game name
 import { FINGER_EXERCISE, FINGER_MATH, FINGER_MORA, POSE } from "../constants";
@@ -100,6 +101,8 @@ const TabPanel = (props) => {
 const LeaderBoard = (props) => {
   const [tabvalue, setTab] = useState(FINGER_MORA);
 
+  const { UserData } = useContext(UserContext);
+
   const handleChange = (event, newValue) => {
     setTab(newValue);
   };
@@ -119,10 +122,7 @@ const LeaderBoard = (props) => {
           alignItems: "center",
         }}
       >
-        <Button
-          variant="contained"
-          href={`/login/${props.UserData.username}/lobby`}
-        >
+        <Button variant="contained" href={`/login/${UserData.username}/lobby`}>
           Back
         </Button>
       </Box>

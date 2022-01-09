@@ -17,8 +17,8 @@ const useUser = () => {
 
   const savedMe = localStorage.getItem(LOCALSTORAGE_KEY);
   const initUser = {
-    username: savedMe || "",
-    password: "",
+    username: savedMe || "fei",
+    password: "fei",
     scores: {},
     signed: false,
   };
