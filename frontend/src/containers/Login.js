@@ -8,10 +8,10 @@ const Login = () => {
   const { UserData } = useContext(UserContext);
 
   return (
-    <Box>
-      <Typography>login</Typography>
-      <Button href={`/login/${UserData.username}/lobby`}>lobby</Button>
-    </Box>
+      <Box>
+        <Typography>login</Typography>
+        <Button href={`/login/${UserData.username}/lobby`} variant="contained">lobby</Button>
+      </Box>
   );
 };
 
