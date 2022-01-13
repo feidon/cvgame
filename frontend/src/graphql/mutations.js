@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
 export const SIGNUP_MUTATION = gql`
-  mutation SignupMutation($name: String!, $password: String!) {
-    createUser(name: $name, password: $password) {
+  mutation SignupMutation($data: CreateUserInput!) {
+    createUser(data:$data) {
       ok
       user {
         name
@@ -13,8 +13,8 @@ export const SIGNUP_MUTATION = gql`
 `;
 
 export const LOGIN_MUTATION = gql`
-  mutation LoginMutation($name: String!, $password: String!) {
-    loginUser(name: $name, password: $password) {
+  mutation LoginMutation($data: CreateUserInput!) {
+      loginUser(data:$data) {
       ok
       user {
         name
@@ -29,8 +29,8 @@ export const LOGIN_MUTATION = gql`
 `;
 
 export const UPDATE_MUTATION = gql`
-  mutation UpdateMutation($name: String!, $game: String!, $score: Int!) {
-    updateUser(name: $name, game: $game, score: $score) {
+  mutation UpdateMutation($data: UpdateUserInput!) {
+    updateUser(data:$data) {
       ok
       user {
         name
