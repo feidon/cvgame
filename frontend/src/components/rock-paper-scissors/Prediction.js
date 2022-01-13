@@ -1,6 +1,6 @@
 import * as handpose from '@tensorflow-models/handpose';
 import '@tensorflow/tfjs-backend-webgl';
-import SampleImage from './SampleImage';
+import * as imgs from './SampleImage';
 import * as fp from './fingerpose-master';
 
 const GE = new fp.GestureEstimator([
@@ -9,6 +9,7 @@ const GE = new fp.GestureEstimator([
 ]);
 
 let handposeModel;
+let intervalID;
 
 const Prediction = {
 
@@ -20,9 +21,12 @@ const Prediction = {
         console.log("Model loaded");
     
         console.log("Warm up model");
-        const sample = await SampleImage.create();
+        const sample = await imgs.SampleImage.create();
         console.log("smaple created");
         await handposeModel.estimateHands(sample, false);
+        const sample1 = await imgs.SampleImage1.create();
+        console.log("smaple1 created");
+        await handposeModel.estimateHands(sample1, false);
         console.log("Model is hot!");
     },
     
@@ -31,7 +35,7 @@ const Prediction = {
     
         const startPredict = () => {
     
-            setInterval(async () => {
+            intervalID = setInterval(async () => {
                 // Pass in a video stream (or an image, canvas, or 3D tensor) to obtain a
                 // hand prediction from the MediaPipe graph.
                 // console.log('predicting...');
@@ -93,7 +97,11 @@ const Prediction = {
         }
     
         startPredict();
-    }
+    },
+
+    stop: function() {
+        clearInterval(intervalID);
+    },
 
 }
 
