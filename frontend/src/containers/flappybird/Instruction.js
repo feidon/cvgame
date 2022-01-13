@@ -1,9 +1,14 @@
-import React from 'react'
+import React, {useContext} from 'react'
+import { UserContext } from "../App";
+import './Instruction.css';
 import Flappy_Bird_icon from '../../img/Flappy_Bird_icon.png'
 import pose_detect from '../../img/pose-detect.png'
-import './Instruction.css';
+import { useNavigate } from "react-router-dom";
+import Button from "@mui/material/Button";
 
 const Instruction = ({ setPrePare }) => {
+    const { UserData } = useContext(UserContext);
+    const navigate = useNavigate();
     return (
         <div className="background">
             <h1 className="title"> Play Flappy Bird Game with Pose Detection ! </h1>
@@ -33,13 +38,13 @@ const Instruction = ({ setPrePare }) => {
                     </li>
                 </ul>
                 <div className="image-container">
-                    <img className="image" src={Flappy_Bird_icon} />
-                    <img className="image" src={pose_detect} />
+                    <img className="image" src={Flappy_Bird_icon} alt="Flappy Bird"/>
+                    <img className="image" src={pose_detect} alt="Pose Detection"/>
                 </div>
             </div>
             <div className="btn-container">
-                <button className="btn">Back</button>
-                <button className="btn" onClick={() => { setPrePare(true) }}>Let's Start! </button>
+                <Button variant="contained" sx={{ m: 3 }} onClick={() => { navigate(`/login/${UserData.username}/lobby`) }}>Back to Lobby</Button>
+                <Button variant="contained" sx={{ m: 3 }} onClick={() => { setPrePare(true) }}>Let's Start! </Button>
             </div>
         </div>
     )

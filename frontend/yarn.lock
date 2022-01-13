@@ -1509,17 +1509,15 @@
     "@types/yargs" "^16.0.0"
     chalk "^4.0.0"
 
-<<<<<<< HEAD
 "@mediapipe/hands@^0.4.1635986972":
   version "0.4.1635986972"
   resolved "https://registry.yarnpkg.com/@mediapipe/hands/-/hands-0.4.1635986972.tgz#21116c13ed69ddb3452b94a7862367f77a5b6927"
   integrity sha512-xVsoT7beiY9glBAHtcEBkfYO1eDMMzmU0U3wOYEy+sphu5y4Lx4Eg9k1qR+IsYYr1CDx+hYQH3YMVXm9D68+8Q==
-=======
+
 "@mediapipe/pose@^0.5.1635988162":
   version "0.5.1635988162"
   resolved "https://registry.yarnpkg.com/@mediapipe/pose/-/pose-0.5.1635988162.tgz#905e626cb07bce86c692d8ec057f04558ddd26fe"
   integrity sha512-t0dpl+iG/MTPtPPxEYHyVWo+X7G+qgYUYaB4y9pxavQRNzuQQeHeSmUnT+A8qOKnuB0ccxgyrrFmGUaaL0F3wQ==
->>>>>>> 5165da561408d6b2fb4de0d50916cfab519ddb82
 
 "@mui/base@5.0.0-alpha.63":
   version "5.0.0-alpha.63"
@@ -1836,7 +1834,6 @@
     "@svgr/plugin-svgo" "^5.5.0"
     loader-utils "^2.0.0"
 
-<<<<<<< HEAD
 "@tensorflow-models/hand-pose-detection@^0.0.1":
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/@tensorflow-models/hand-pose-detection/-/hand-pose-detection-0.0.1.tgz#f5b4211f90f9449610cffcc0631fcd02e93cca6f"
@@ -1844,8 +1841,6 @@
   dependencies:
     rimraf "^3.0.2"
 
-=======
->>>>>>> 5165da561408d6b2fb4de0d50916cfab519ddb82
 "@tensorflow-models/handpose@0.0.7":
   version "0.0.7"
   resolved "https://registry.yarnpkg.com/@tensorflow-models/handpose/-/handpose-0.0.7.tgz#553d1bdc05dd437f6f24ea94373ec03267cb6e21"
@@ -1853,8 +1848,6 @@
   dependencies:
     rimraf "^3.0.2"
 
-<<<<<<< HEAD
-=======
 "@tensorflow-models/pose-detection@^0.0.6":
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/@tensorflow-models/pose-detection/-/pose-detection-0.0.6.tgz#a9fc1c37d50fa3fa457832f356a66acb109651f2"
@@ -1862,7 +1855,6 @@
   dependencies:
     rimraf "^3.0.2"
 
->>>>>>> 5165da561408d6b2fb4de0d50916cfab519ddb82
 "@tensorflow/tfjs-backend-cpu@3.12.0":
   version "3.12.0"
   resolved "https://registry.yarnpkg.com/@tensorflow/tfjs-backend-cpu/-/tfjs-backend-cpu-3.12.0.tgz#a96279c3116486dfb5deccf8bac78f72d3f77f65"

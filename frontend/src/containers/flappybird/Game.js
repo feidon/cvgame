@@ -1,4 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useContext } from 'react'
+import { UPDATE_MUTATION } from "../../graphql/index";
+import { useMutation } from "@apollo/react-hooks";
+import { UserContext } from "../App";
 import './Game.css';
 import GameParamters from "../../utils/flappybird/GameSetting"
 import { drawCanvas } from "../../utils/flappybird/canvasUtils";
@@ -8,9 +11,12 @@ import Pipe from "../../components/flappybird/Pipe"
 import Webcam from "react-webcam";
 import * as poseDetection from '@tensorflow-models/pose-detection';
 import '@tensorflow/tfjs-backend-webgl';
+import Button from "@mui/material/Button";
 
 
 const Game = ({ setPrePare }) => {
+  const { UserData, setUserData } = useContext(UserContext);
+  const [UpdateMutation] = useMutation(UPDATE_MUTATION);
   // bird的初始狀態
   const birdInitialState = {
     height: GameParamters.bird.initialHeight,
@@ -84,6 +90,7 @@ const Game = ({ setPrePare }) => {
       setLoading(false)
     })()
 
+
     const startGame = setInterval(() => {
       detect(detector)
       if (playRef.current) {
@@ -115,6 +122,33 @@ const Game = ({ setPrePare }) => {
 
   }, [playing,])
 
+  useEffect(() => {
+    if (UserData.scores.hasOwnProperty("POSE_FLAPPY_BIRD")) {  //玩過 Pose Flappy Bird
+      if (score > UserData.scores["POSE_FLAPPY_BIRD"]) {
+        setUserData({ ...UserData, scores: { ...UserData.scores, "POSE_FLAPPY_BIRD": score } })
+        UpdateMutation({
+          variables: {
+            data: {
+              name: UserData.username,
+              game: "POSE_FLAPPY_BIRD",
+              score: score,
+            }
+          },
+        });
+      }
+    } else {
+      setUserData({ ...UserData, scores: { ...UserData.scores, "POSE_FLAPPY_BIRD": score } })
+      UpdateMutation({
+        variables: {
+          data: {
+            name: UserData.username,
+            game: "POSE_FLAPPY_BIRD",
+            score: score,
+          }
+        },
+      });
+    }
+  }, [playing])
 
   // 創建一根新的pipe加入pipeRef.current.list
   const creatNewPipe = (now) => {
@@ -211,13 +245,7 @@ const Game = ({ setPrePare }) => {
 
   return (
     <div className="background" onMouseDown={flap}>
-      <h3 className="loading-status">{
-        !playing ?
-          loading ? "Loading MoveNet..." :
-            detecting ? "MoveNet is ready, plseae enjoy the game !" :
-              "MoveNet is detecting your pose, please wait a moment..." :
-          "Wave your arm !"
-      }</h3>
+      <h1 className="loading-status">Pose Flappy Bird Game</h1>
       <div className="container" >
         <div className="gameWrapper">
           <div className="game">
@@ -238,9 +266,16 @@ const Game = ({ setPrePare }) => {
           <canvas ref={canvasRef} className="video" />
         </div>
       </div>
+      <h3 className="loading-status">{
+        !playing ?
+          loading ? "Loading MoveNet..." :
+            detecting ? "MoveNet is ready, plseae enjoy the game !" :
+              "MoveNet is detecting your pose, please wait a moment..." :
+          "Wave your arm !"
+      }</h3>
       <div className="btn-container">
-        <button className="btn" onClick={() => { setPrePare(false) }}>Back</button>
-        <button className="btn" onClick={() => { onPlay() }}>Play</button>
+        <Button variant="contained" sx={{ mx: 3, px: 3 }} onClick={() => { setPrePare(false) }}>Back</Button>
+        <Button variant="contained" sx={{ mx: 3, px: 3 }} onClick={() => { onPlay() }}>Play</Button>
       </div>
     </div>
 
