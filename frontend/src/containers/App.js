@@ -2,18 +2,14 @@
 import "./App.css";
 import LeaderBoard from "./LeaderBoard";
 import { Routes, Route, Navigate } from "react-router-dom";
-import { Box } from "@mui/material";
-import Button from "@mui/material/Button";
-import { Typography } from "@mui/material";
 import CssBaseline from '@mui/material/CssBaseline';
-
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-
 import useUser from "../hooks/useUser";
 import { createContext } from "react";
 import Lobby from "./Lobby";
 import Login from "./Login";
 import Register from "./Register"
+import About from "./About";
 import FlappyBirdGamePage from "./flappybird/GamePage";
 import RockPaperScissors from "./rock-paper-scissors/GamePage";
 
@@ -50,6 +46,7 @@ function App() {
     handleLogin,
     handleUpdate,
     handleLogout,
+    handleSignUp
   } = useUser();
   return (
     <UserContext.Provider
@@ -67,6 +64,7 @@ function App() {
         handleLogin,
         handleUpdate,
         handleLogout,
+        handleSignUp
       }}
     >
       <ThemeProvider theme={theme}>
@@ -74,11 +72,13 @@ function App() {
       <Routes>
         <Route exact path="/login" element={<Login />} />
         <Route path="/register" element={<Register />}/>
+        
         <Route
           path="/login/:username/leaderboard"
           element={<LeaderBoard  />}
         />
         <Route path="/login/:username/lobby" element={<Lobby />} />
+        <Route path="/login/:username/about" element={<About />}/>
         <Route path="/login/:username/pose-flappy-bird" element={<FlappyBirdGamePage />} />
         <Route path="/login/:username/rock-paper-scissors" element={<RockPaperScissors />} />
         <Route path="/" element={<Navigate to="/login" />} />

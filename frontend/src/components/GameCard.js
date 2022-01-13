@@ -11,7 +11,7 @@ import { CardActionArea } from '@mui/material';
 // onClick: navigate到該遊戲url的callback function 
 export default function GameCard({imageURL, title, description, onClick}) {
   return (
-    <Card sx={{ maxWidth: 345 }} onClick={onClick}>
+    <Card sx={{ maxWidth: 345, height:350 }} onClick={onClick}>
       <CardActionArea >
         <CardMedia
           component="img"

@@ -9,8 +9,6 @@ body {
 
 .background {
 	position: relative;
-	/* background-color: #282c34; */
-	min-width: 100vw;
     min-height: 100vh;
 	margin: 0;
 }
@@ -19,19 +17,18 @@ body {
 	font-family: 'Luxurious Roman', cursive;
 	position: relative;
 	margin: 0;
-	padding: 15px 0 0 0;
 	color: white;
 	text-align: center;
 }
 
-.container {
+.container-game {
 	position: relative;
     display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
 	justify-content: center;
     align-items: center;
-	top: 30px;
+	margin-bottom: 0px 
 }
 
 
@@ -42,6 +39,7 @@ body {
 	width: 640px;
 	height: 480px;
 	margin: 30px;
+	overflow: hidden;
 }
 
 .video {
@@ -50,8 +48,8 @@ body {
 	z-index: 9;
 	width: 640px;
 	height: 480px;
-	left: 120;
-	top: 100;
+	/* left: 120; */
+	/* top: 100; */
 	transform: rotateY(180deg);
   }
 
@@ -60,8 +58,7 @@ body {
 	border: 7px solid rgba(255, 255, 255, 0.2);
 	border-radius: 8px;
 	width: 400px;  
-	height: 512px;
-	margin: 30px;	
+	height: 512px;	
 }
 
 .game {
@@ -136,15 +133,3 @@ body {
     top:20px;
 }
 
-.btn {
-    padding: 15px 25px 15px 25px;
-    border-radius: 3px;
-    border-width: 5px;
-    background-color: rgba(129, 129, 129, 0.2);
-    color: white;
-    margin: 0 40px;
-}
-
-.btn:hover{
-    border-color: white;
-}
