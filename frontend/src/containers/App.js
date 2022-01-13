@@ -15,6 +15,7 @@ import Lobby from "./Lobby";
 import Login from "./Login";
 import Register from "./Register"
 import FlappyBirdGamePage from "./flappybird/GamePage";
+import RockPaperScissors from "./rock-paper-scissors/GamePage";
 
 const theme = createTheme({
   palette: {
@@ -79,6 +80,7 @@ function App() {
         />
         <Route path="/login/:username/lobby" element={<Lobby />} />
         <Route path="/login/:username/pose-flappy-bird" element={<FlappyBirdGamePage />} />
+        <Route path="/login/:username/rock-paper-scissors" element={<RockPaperScissors />} />
         <Route path="/" element={<Navigate to="/login" />} />
         <Route path="*" element={<Navigate to="/login" />} /> 
       </Routes>

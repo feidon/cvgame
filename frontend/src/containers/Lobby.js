@@ -21,9 +21,15 @@ const Lobby = () => {
         You can control the bird flyying by wave your arms !"}
         onClick={() => { navigate(`/login/${UserData.username}/pose-flappy-bird`) }}
       />
+      <GameCard
+        imageURL={[require("../img//Rock_Paper_Scissors_icon.png")]}
+        title={"Rock-Paper-Scissors"}
+        description={"Use one of your hands to play rock-paper-scissors with the computer! The game is not finished yet ><"}
+        onClick={() => { navigate(`/login/${UserData.username}/rock-paper-scissors`) }}
+      />
       <Button  variant="contained" onClick={() => { navigate(`/login/${UserData.username}/leaderboard`) }}>
         leaderboard
-      </Button>
+</Button>
       <Button onClick={handleLogout} variant="contained">Logout</Button>
     </Box>
   );
