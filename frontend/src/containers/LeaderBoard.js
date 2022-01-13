@@ -1,4 +1,5 @@
 import { useState, useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
@@ -16,7 +17,7 @@ import { USER_QUERY, USER_SUBSCRIPTION } from "../graphql";
 import { UserContext } from "./App";
 
 // Use these as game name
-import { FINGER_EXERCISE, FINGER_MATH, FINGER_MORA, POSE } from "../constants";
+import { FINGER_EXERCISE, FINGER_MATH, FINGER_MORA, POSE, POSE_FLAPPY_BIRD } from "../constants";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -73,7 +74,7 @@ const TabPanel = (props) => {
             <TableHead>
               <StyledTableRow>
                 <StyledTableCell align="center">Name</StyledTableCell>
-                <StyledTableCell align="center">Time</StyledTableCell>
+                <StyledTableCell align="center">{index === POSE_FLAPPY_BIRD ? "Score" : "Time"}</StyledTableCell>
               </StyledTableRow>
             </TableHead>
             <TableBody>
@@ -100,7 +101,7 @@ const TabPanel = (props) => {
 
 const LeaderBoard = (props) => {
   const [tabvalue, setTab] = useState(FINGER_MORA);
-
+  const navigate = useNavigate();
   const { UserData } = useContext(UserContext);
 
   const handleChange = (event, newValue) => {
@@ -122,7 +123,7 @@ const LeaderBoard = (props) => {
           alignItems: "center",
         }}
       >
-        <Button variant="contained" href={`/login/${UserData.username}/lobby`}>
+        <Button variant="contained" onClick={() => { navigate(`/login/${UserData.username}/lobby`) }} >
           Back
         </Button>
       </Box>
@@ -136,11 +137,13 @@ const LeaderBoard = (props) => {
           <Tab value={FINGER_MATH} label={FINGER_MATH} />
           <Tab value={POSE} label={POSE} />
           <Tab value={FINGER_EXERCISE} label={FINGER_EXERCISE} />
+          <Tab value={POSE_FLAPPY_BIRD} label={POSE_FLAPPY_BIRD} />
         </Tabs>
         <TabPanel value={tabvalue} index={FINGER_MORA} />
         <TabPanel value={tabvalue} index={FINGER_MATH} />
         <TabPanel value={tabvalue} index={POSE} />
         <TabPanel value={tabvalue} index={FINGER_EXERCISE} />
+        <TabPanel value={tabvalue} index={POSE_FLAPPY_BIRD} />
       </Box>
     </Box>
   );

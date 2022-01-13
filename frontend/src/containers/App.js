@@ -13,6 +13,7 @@ import useUser from "../hooks/useUser";
 import { createContext } from "react";
 import Lobby from "./Lobby";
 import Login from "./Login";
+import Register from "./Register"
 import FlappyBirdGamePage from "./flappybird/GamePage";
 
 const theme = createTheme({
@@ -71,13 +72,15 @@ function App() {
       <CssBaseline />
       <Routes>
         <Route exact path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />}/>
         <Route
           path="/login/:username/leaderboard"
-          element={<LeaderBoard UserData={UserData} />}
+          element={<LeaderBoard  />}
         />
         <Route path="/login/:username/lobby" element={<Lobby />} />
         <Route path="/login/:username/pose-flappy-bird" element={<FlappyBirdGamePage />} />
         <Route path="/" element={<Navigate to="/login" />} />
+        <Route path="*" element={<Navigate to="/login" />} /> 
       </Routes>
       </ThemeProvider>
     </UserContext.Provider>
