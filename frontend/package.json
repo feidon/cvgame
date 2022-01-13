@@ -7,10 +7,15 @@
     "@apollo/react-hooks": "^4.0.0",
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
+<<<<<<< HEAD
+    "@mediapipe/hands": "^0.4.1635986972",
+=======
     "@mediapipe/pose": "^0.5.1635988162",
+>>>>>>> 5165da561408d6b2fb4de0d50916cfab519ddb82
     "@mui/icons-material": "^5.2.5",
     "@mui/lab": "^5.0.0-alpha.63",
     "@mui/material": "^5.2.7",
+    "@tensorflow-models/hand-pose-detection": "^0.0.1",
     "@tensorflow-models/handpose": "0.0.7",
     "@tensorflow-models/pose-detection": "^0.0.6",
     "@tensorflow/tfjs-backend-webgl": "^3.12.0",
