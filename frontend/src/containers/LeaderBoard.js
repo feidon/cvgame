@@ -63,7 +63,7 @@ const TabPanel = (props) => {
         return { users: subscriptionData.data.userUpdated.data };
       },
     });
-  });
+  }, [subscribeToMore]);
 
   if (data) console.log(data.users);
   if (loading) return <Box>Loading...</Box>;
