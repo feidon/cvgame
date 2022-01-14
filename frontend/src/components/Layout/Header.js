@@ -145,8 +145,8 @@ const Header = ({ open, setOpen, toggleSideBar }) => {
                         <MenuItem key={"Log Out"} onClick={handleLogout}>
                             <Typography textAlign="center">{"Log Out"}</Typography>
                         </MenuItem>
-                        <MenuItem key={"Singn Up"} onClick={handleSignUp}>
-                            <Typography textAlign="center">{"Singn Up"}</Typography>
+                        <MenuItem key={"Sign Up"} onClick={handleSignUp}>
+                            <Typography textAlign="center">{"Sign Up"}</Typography>
                         </MenuItem>
                     </Menu>
                 </Box>
