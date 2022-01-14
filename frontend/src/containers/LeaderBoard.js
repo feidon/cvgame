@@ -1,6 +1,6 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { useQuery } from "@apollo/client";
+// import { useQuery } from "@apollo/client";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Button from "@mui/material/Button";
@@ -13,7 +13,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { USER_QUERY, USER_SUBSCRIPTION } from "../graphql";
+// import { USER_QUERY, USER_SUBSCRIPTION } from "../graphql";
 import { UserContext } from "./App";
 import Layout from "../components/Layout/Layout";
 
@@ -40,12 +40,13 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 const TabPanel = (props) => {
-  const { value, index, ...other } = props;
-  const { loading, error, data, subscribeToMore } = useQuery(USER_QUERY, {
-    variables: {
-      game: index,
-    },
-  });
+  const { value, index, loading, error, data, subscribeToMore, ...other } =
+    props;
+  // const { loading, error, data, subscribeToMore } = useQuery(USER_QUERY, {
+  //   variables: {
+  //     game: index,
+  //   },
+  // });
 
   const gettime = (time) => {
     const minute = ("0" + Math.floor((time / 60000) % 60)).slice(-2);
@@ -54,18 +55,20 @@ const TabPanel = (props) => {
     return `${minute}:${second}:${milsec}`;
   };
 
-  useEffect(() => {
-    subscribeToMore({
-      document: USER_SUBSCRIPTION,
-      variables: { game: index },
-      updateQuery: (prev, { subscriptionData }) => {
-        if (!subscriptionData.data) return prev;
-        return { users: subscriptionData.data.userUpdated.data };
-      },
-    });
-  }, [subscribeToMore]);
+  // useEffect(() => {
+  //   subscribeToMore({
+  //     document: USER_SUBSCRIPTION,
+  //     variables: { game: index },
+  //     updateQuery: (prev, { subscriptionData }) => {
+  //       if (!subscriptionData.data) return prev;
+  //       console.log(prev.users);
+  //       console.log(subscriptionData.data.userUpdated.data);
+  //       return { users: subscriptionData.data.userUpdated.data };
+  //     },
+  //   });
+  // }, [subscribeToMore]);
 
-  if (data) console.log(data.users);
+  // if (data) console.log(data.users);
   if (loading) return <Box>Loading...</Box>;
   if (error) return <Box>Error! ${error.message}</Box>;
   return (
@@ -157,9 +160,9 @@ const LeaderBoard = (props) => {
             <Tab value={FINGER_EXERCISE} label={FINGER_EXERCISE} />
             <Tab value={POSE_FLAPPY_BIRD} label={POSE_FLAPPY_BIRD} />
           </Tabs>
-          <TabPanel value={tabvalue} index={FINGER_MORA} />
-          <TabPanel value={tabvalue} index={FINGER_EXERCISE} />
-          <TabPanel value={tabvalue} index={POSE_FLAPPY_BIRD} />
+          <TabPanel value={tabvalue} index={FINGER_MORA} {...props} />
+          <TabPanel value={tabvalue} index={FINGER_EXERCISE} {...props} />
+          <TabPanel value={tabvalue} index={POSE_FLAPPY_BIRD} {...props} />
         </Box>
       </Box>
     </Layout>

@@ -12,13 +12,72 @@ import { FINGER_EXERCISE } from "../../constants/index";
 import { UPDATE_MUTATION } from "../../graphql/index";
 import { useMutation } from "@apollo/react-hooks";
 
+class Timer {
+  constructor() {
+    this.isRunning = false;
+    this.startTime = 0;
+    this.overallTime = 0;
+  }
+
+  _getTimeElapsedSinceLastStart() {
+    if (!this.startTime) {
+      return 0;
+    }
+
+    return Date.now() - this.startTime;
+  }
+
+  start() {
+    if (this.isRunning) {
+      return console.error("Timer is already running");
+    }
+
+    this.isRunning = true;
+
+    this.startTime = Date.now();
+  }
+
+  stop() {
+    if (!this.isRunning) {
+      return console.error("Timer is already stopped");
+    }
+
+    this.isRunning = false;
+
+    this.overallTime = this.overallTime + this._getTimeElapsedSinceLastStart();
+  }
+
+  reset() {
+    this.overallTime = 0;
+
+    if (this.isRunning) {
+      this.startTime = Date.now();
+      return;
+    }
+
+    this.startTime = 0;
+  }
+
+  getTime() {
+    if (!this.startTime) {
+      return 0;
+    }
+
+    if (this.isRunning) {
+      return this.overallTime + this._getTimeElapsedSinceLastStart();
+    }
+
+    return this.overallTime;
+  }
+}
+
 function Game({ setPrePare }) {
   const webcamRef = useRef(null);
   const predictPromise = useRef(null);
   const idxRef = useRef(0);
+  const timeRef = useRef(null);
 
-  const { UserData, time, setGame, setTime, setTimerOn, setUserData } =
-    useContext(UserContext);
+  const { UserData, setUserData } = useContext(UserContext);
 
   const handimage = [Zero, One, Two, Three, Four, Five];
   const handlist = ["zero", "one", "two", "three", "four", "five"];
@@ -28,10 +87,13 @@ function Game({ setPrePare }) {
   const [Gesarraybool, setGesarraybool] = useState(Array(60).fill(false));
   const [start, setStart] = useState(false);
   const [UpdateMutation] = useMutation(UPDATE_MUTATION);
+  const [time, setTime] = useState(0);
+  const [timerOn, setTimerOn] = useState(false);
 
   const handleStart = () => {
     idxRef.current = 0;
-    setGame(FINGER_EXERCISE);
+    timeRef.current = new Timer();
+    timeRef.current.start();
     setTime(0);
     setStart(true);
   };
@@ -115,7 +177,9 @@ function Game({ setPrePare }) {
             } else {
               if (!Gesarraybool[idxRef.current]) {
                 if (handlist[Gesarray[idxRef.current]] === playerGesture) {
-                  const newarr = [...Gesarraybool];
+                  const newarr = Array(60)
+                    .fill(false)
+                    .fill(true, 0, idxRef.current);
                   newarr[idxRef.current] = true;
                   idxRef.current++;
                   setGesarraybool(newarr);
@@ -135,9 +199,21 @@ function Game({ setPrePare }) {
   const gettime = (time) => {
     const minute = ("0" + Math.floor((time / 60000) % 60)).slice(-2);
     const second = ("0" + Math.floor((time / 1000) % 60)).slice(-2);
-    const milsec = ("0" + ((time / 10) % 100)).slice(-2);
+    const milsec = ("0" + (Math.floor(time / 10) % 100)).slice(-2);
     return `${minute}:${second}:${milsec}`;
   };
+
+  useEffect(() => {
+    let inter = null;
+    if (timerOn) {
+      inter = setInterval(() => {
+        setTime(Math.round(timeRef.current.getTime()));
+      }, 25);
+    } else if (!timerOn) {
+      clearInterval(inter);
+    }
+    return () => clearInterval(inter);
+  }, [timerOn]);
 
   // setyp & initialization
   // -----------------------------------------------------------------------------

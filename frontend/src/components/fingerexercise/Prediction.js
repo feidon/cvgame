@@ -9,9 +9,35 @@ import {
   FourGesture,
   OneGesture,
 } from "./Gestures";
+import rock from "../../img/sample_rock.jpg";
+import paper from "../../img/sample_paper.jpg";
 
 // store references
 let handposeModel, gestureEstimator;
+
+const SampleImage = {
+  create: () => {
+    let imageEl = new Image(1024, 701);
+    imageEl.src = rock;
+    return new Promise((resolve) => {
+      imageEl.onload = function () {
+        resolve(imageEl);
+      };
+    });
+  },
+};
+
+const SampleImage1 = {
+  create: () => {
+    let imageEl = new Image(1024, 701);
+    imageEl.src = paper;
+    return new Promise((resolve) => {
+      imageEl.onload = function () {
+        resolve(imageEl);
+      };
+    });
+  },
+};
 
 export const Prediction = {
   init: async function () {
@@ -31,6 +57,15 @@ export const Prediction = {
     console.log("Loading handpose model...");
     handposeModel = await handpose.load();
     console.log("Model loaded");
+
+    console.log("Warm up model");
+    const sample = await SampleImage.create();
+    console.log("smaple created");
+    await handposeModel.estimateHands(sample, false);
+    const sample1 = await SampleImage1.create();
+    console.log("smaple1 created");
+    await handposeModel.estimateHands(sample1, false);
+    console.log("Model is hot!");
   },
 
   predictGesture: async function (sourceElement, minimumScore) {

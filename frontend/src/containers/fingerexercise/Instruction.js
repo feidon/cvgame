@@ -33,7 +33,7 @@ const Instruction = ({ setPrePare }) => {
             疑難排解: <br />
             Q1: 若我的電腦沒有前置鏡頭怎麼辦？
             <br />
-            A1: 此遊戲也可以藉由點擊滑鼠來進行唷!
+            A1: 那不能玩，再見了!!
             <br />
             Q2: 要如何增加操作的穩定性？ <br />
             A2: 因為此遊戲是藉由tensorflow.js的handpose
