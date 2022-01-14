@@ -15,6 +15,8 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { USER_QUERY, USER_SUBSCRIPTION } from "../graphql";
 import { UserContext } from "./App";
+import Layout from "../components/Layout/Layout";
+
 
 // Use these as game name
 import { FINGER_EXERCISE, FINGER_MATH, FINGER_MORA, POSE, POSE_FLAPPY_BIRD } from "../constants";
@@ -109,43 +111,45 @@ const LeaderBoard = (props) => {
   };
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-      }}
-    >
+    <Layout>
       <Box
         sx={{
-          width: "10%",
-          height: "50px",
           display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
         }}
       >
-        <Button variant="contained" onClick={() => { navigate(`/login/${UserData.username}/lobby`) }} >
-          Back
-        </Button>
+        <Box
+          sx={{
+            width: "10%",
+            height: "50px",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Button variant="contained" onClick={() => { navigate(`/login/${UserData.username}/lobby`) }} >
+            Back
+          </Button>
+        </Box>
+        <Box
+          sx={{
+            width: "80%",
+          }}
+        >
+          <Tabs value={tabvalue} onChange={handleChange} variant="fullWidth">
+            <Tab value={FINGER_MORA} label={FINGER_MORA} />
+            <Tab value={FINGER_MATH} label={FINGER_MATH} />
+            <Tab value={POSE} label={POSE} />
+            <Tab value={FINGER_EXERCISE} label={FINGER_EXERCISE} />
+            <Tab value={POSE_FLAPPY_BIRD} label={POSE_FLAPPY_BIRD} />
+          </Tabs>
+          <TabPanel value={tabvalue} index={FINGER_MORA} />
+          <TabPanel value={tabvalue} index={FINGER_MATH} />
+          <TabPanel value={tabvalue} index={POSE} />
+          <TabPanel value={tabvalue} index={FINGER_EXERCISE} />
+          <TabPanel value={tabvalue} index={POSE_FLAPPY_BIRD} />
+        </Box>
       </Box>
-      <Box
-        sx={{
-          width: "80%",
-        }}
-      >
-        <Tabs value={tabvalue} onChange={handleChange} variant="fullWidth">
-          <Tab value={FINGER_MORA} label={FINGER_MORA} />
-          <Tab value={FINGER_MATH} label={FINGER_MATH} />
-          <Tab value={POSE} label={POSE} />
-          <Tab value={FINGER_EXERCISE} label={FINGER_EXERCISE} />
-          <Tab value={POSE_FLAPPY_BIRD} label={POSE_FLAPPY_BIRD} />
-        </Tabs>
-        <TabPanel value={tabvalue} index={FINGER_MORA} />
-        <TabPanel value={tabvalue} index={FINGER_MATH} />
-        <TabPanel value={tabvalue} index={POSE} />
-        <TabPanel value={tabvalue} index={FINGER_EXERCISE} />
-        <TabPanel value={tabvalue} index={POSE_FLAPPY_BIRD} />
-      </Box>
-    </Box>
+    </Layout>
   );
 };
 

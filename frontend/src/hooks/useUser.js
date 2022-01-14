@@ -51,13 +51,13 @@ const useUser = () => {
     return () => clearInterval(interval);
   }, [timerOn]);
 
-      // 重整頁面就會回到login Page
-      useEffect(() => {
-        console.log(location.pathname)
-        if (!UserData.signed && location.pathname!=="/register") {
-          navigate(`/`)
-        }
-      }, [])
+    // 重整頁面就會回到login Page
+    useEffect(() => {
+      console.log(location.pathname)
+      if (!UserData.signed && location.pathname!=="/register") {
+        navigate(`/`)
+      }
+    }, [])
 
   // handle user data change:
   // input : Object key, Object value
@@ -139,6 +139,12 @@ const useUser = () => {
     navigate("/login");
   };
 
+  const handleSignUp = async () => {
+    await localStorage.clear();
+    await setUserData(initUser);
+    navigate("/register");
+  };
+
   return {
     UserData,
     game,
@@ -153,6 +159,7 @@ const useUser = () => {
     handleLogin,
     handleUpdate,
     handleLogout,
+    handleSignUp,
   };
 };
 

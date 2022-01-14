@@ -246,7 +246,7 @@ const Game = ({ setPrePare }) => {
   return (
     <div className="background" onMouseDown={flap}>
       <h1 className="loading-status">Pose Flappy Bird Game</h1>
-      <div className="container" >
+      <div className="container-game" >
         <div className="gameWrapper">
           <div className="game">
             <div className="scene" >
@@ -274,7 +274,7 @@ const Game = ({ setPrePare }) => {
           "Wave your arm !"
       }</h3>
       <div className="btn-container">
-        <Button variant="contained" sx={{ mx: 3, px: 3 }} onClick={() => { setPrePare(false) }}>Back</Button>
+        <Button variant="contained" sx={{ mx: 3, px: 3, backgroundColor: (theme) => theme.palette.secondary}} onClick={() => { setPrePare(false) }}>Back</Button>
         <Button variant="contained" sx={{ mx: 3, px: 3 }} onClick={() => { onPlay() }}>Play</Button>
       </div>
     </div>

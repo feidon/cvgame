@@ -12,7 +12,7 @@ const Instruction = ({ setPrePare }) => {
     return (
         <div className="background">
             <h1 className="title"> Play Flappy Bird Game with Pose Detection ! </h1>
-            <div className="container">
+            <div className="container-instruction">
                 <ul className="instruction-container">
                     <li className="instruction">
                         遊戲說明:<br />
@@ -43,8 +43,8 @@ const Instruction = ({ setPrePare }) => {
                 </div>
             </div>
             <div className="btn-container">
-                <Button variant="contained" sx={{ m: 3 }} onClick={() => { navigate(`/login/${UserData.username}/lobby`) }}>Back to Lobby</Button>
-                <Button variant="contained" sx={{ m: 3 }} onClick={() => { setPrePare(true) }}>Let's Start! </Button>
+                <Button variant="contained" sx={{ mx: 3 }} onClick={() => { navigate(`/login/${UserData.username}/lobby`) }}>Go Back</Button>
+                <Button variant="contained" sx={{ mx: 3 }} onClick={() => { setPrePare(true) }}>Let's Start! </Button>
             </div>
         </div>
     )
