@@ -23,7 +23,7 @@ const Layout = (props) => {
                 }}
             >
                 <Toolbar />
-                <Container maxWidth="lg" sx={{ mt: 4, mb: 8, minHeight:'60vh', }}>
+                <Container maxWidth="lg" sx={{ mt: 4, mb: 8, minHeight:'65vh', }}>
                     {props.children}
                 </Container>
                 <Footer/>

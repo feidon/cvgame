@@ -9,7 +9,7 @@
     overflow: hidden;
 } */
 
-.title {
+.title-flappybird {
     position: relative;
     text-align: center;
     color: white;
@@ -18,7 +18,7 @@
     margin: 0;
 }
 
-.container-instruction {
+.container-instruction-flappybird {
 	position: relative;
     display: flex;
 	flex-direction: row;
@@ -27,7 +27,7 @@
     padding: 0 40px;
 }
 
-.instruction-container {
+.container-instruction-flappybird .container {
     border-radius: 8px;
     border: 5px solid rgba(255, 255, 255, 0.2);
     padding: 10px;
@@ -37,31 +37,31 @@
     height: auto;
 }
 
-.instruction-container:hover{
+.container-instruction-flappybird .container:hover{
     border-color: white;
     font-weight:bold;
 }
 
-.instruction {
+.container-instruction-flappybird .container .instruction {
     color: white;
     letter-spacing: 3px;
     margin: 20px;
 }
 
-.image-container{
+.image-container-flappybird{
     display: flex;
 	flex-direction: column;
     margin-left: 40px;
 }
 
-.image{
+.image-flappybird{
     border-radius: 60px;
     height: 250px;
     border: 15px solid rgba(255, 255, 255, 0.2);
     margin: 10px 0;
 }
 
-.btn-container {
+.btn-container-flappybird {
     position: relative;
     display: flex;
     flex-direction: row;
