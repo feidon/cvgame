@@ -31,7 +31,7 @@ const Footer = () => {
                             <Link href="https://github.com/feidon" underline='hover' color="inherit">費聿喧 Yu-Hsuan Fei</Link>
                         </Box>
                         <Box>
-                            <Link href="https://github.com/b06901089" underline='hover' color="inherit">蔡予謙</Link>
+                            <Link href="https://github.com/b06901089" underline='hover' color="inherit">蔡予謙 Yu-Chien Tsai</Link>
                         </Box>
                     </Grid>
                     <Grid item xs={10} sm={4}>
