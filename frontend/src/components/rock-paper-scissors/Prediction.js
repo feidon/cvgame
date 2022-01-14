@@ -2,11 +2,18 @@ import * as handpose from '@tensorflow-models/handpose';
 import '@tensorflow/tfjs-backend-webgl';
 import * as imgs from './SampleImage';
 import * as fp from './fingerpose-master';
+import { RockGesture, PaperGesture, ScissorsGesture } from '../../graphql/Gestures';
+
+// const GE = new fp.GestureEstimator([
+//     fp.Gestures.VictoryGesture,
+//     fp.Gestures.ThumbsUpGesture
+// ]);
 
 const GE = new fp.GestureEstimator([
-    fp.Gestures.VictoryGesture,
-    fp.Gestures.ThumbsUpGesture
-]);
+    RockGesture,
+    PaperGesture,
+    ScissorsGesture,
+])
 
 let handposeModel;
 let intervalID;
@@ -76,12 +83,12 @@ const Prediction = {
                         const estimatedGestures = GE.estimate(predictions[i].landmarks, 9);
                         const { posData, gestures } = estimatedGestures;
                         if (gestures.length > 0) {
-                            console.log(gestures[0].name);
+                            // console.log(gestures[0].name);
                             setGestureName(gestures[0].name);
                             setGestureScore(gestures[0].score);
                         }
                         else {
-                            console.log('none');
+                            // console.log('none');
                             setGestureName('none');
                             setGestureScore(0);
                         }
@@ -93,7 +100,7 @@ const Prediction = {
                         // }
                     }
                 }
-            }, 500);
+            }, 200);
         }
     
         startPredict();
