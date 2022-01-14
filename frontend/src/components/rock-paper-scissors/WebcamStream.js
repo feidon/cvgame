@@ -6,10 +6,12 @@ import { UPDATE_MUTATION } from "../../graphql/index";
 import { useMutation } from "@apollo/react-hooks";
 import { UserContext } from "../../containers/App";
 import { useNavigate } from "react-router-dom";
+import { FINGER_MORA } from '../../constants';
 import './WebcamStream.css';
 
 const Correct_Time = 10;
 let IDs = [];
+let stream;
 
 const check_objective_is_same = (new_rps, new_obj, old_rps, old_obj) => {
     if (
@@ -106,12 +108,9 @@ function AppStreamCam({ setIsInstruction }) {
             setCountDown('start in 1');
         }, 3000));
         IDs.push(setTimeout(() => {
-            setCountDown('GO!!!!!');
+            setCountDown('(Stay Focus)');
             setIsCountDowning(false);
         }, 4000));
-        IDs.push(setTimeout(() => {
-            setCountDown('(Stay Focus)');
-        }, 5000));
     }
 
     const handleStop = () => {
@@ -119,6 +118,9 @@ function AppStreamCam({ setIsInstruction }) {
         IDs.map((id) => {
             clearTimeout(id);
         })
+        stream.getTracks().forEach(function(track) {
+            track.stop();
+        });
         Prediction.stop();
         setGestureName('none');
         setGestureScore(0);
@@ -136,7 +138,7 @@ function AppStreamCam({ setIsInstruction }) {
                 .getUserMedia(constraints)
                 .then(function(mediaStream) {
                     var video = document.querySelector("video");
-        
+                    stream = mediaStream;
                     video.srcObject = mediaStream;
                     video.onloadedmetadata = function(e) {
                         video.play();
@@ -150,6 +152,31 @@ function AppStreamCam({ setIsInstruction }) {
                     console.log(err.name + ": " + err.message);
                 });
         }
+    }
+
+    const score2Time = (score) => {
+        let minute;
+        if (Math.floor(score/60000) < 10) {
+            minute = '0' + Math.floor(score/60000).toString();
+        } else {
+            minute = Math.floor(score/60000).toString();
+        }
+        let second;
+        if (Math.floor((score%60000)/1000) < 10) {
+            second = '0' + Math.floor((score%60000)/1000).toString();
+        } else {
+            second = Math.floor((score%60000)/1000).toString();
+        }
+        let msecond;
+        if ((score%1000) < 10) {
+            msecond = '00';
+        } else if ((score%1000) < 100) {
+            msecond = '0' + (score%1000).toString().substring(0, 1);
+        } else {
+            msecond = (score%1000).toString().substring(0, 2);
+        }
+
+        return minute + ':' + second + ':' + msecond;
     }
 
     //rock     => rps = 0
@@ -175,27 +202,27 @@ function AppStreamCam({ setIsInstruction }) {
 
     useEffect(() => {
         if (score !== 0) {
-            if (UserData.scores.hasOwnProperty("FINGER_MORA")) {  //玩過 Rock-Paper-Scissors
-                if (score < UserData.scores["FINGER_MORA"]) {
-                    setUserData({ ...UserData, scores: { ...UserData.scores, "FINGER_MORA": score } })
+            if (UserData.scores.hasOwnProperty(FINGER_MORA)) {  //玩過 Rock-Paper-Scissors
+                if (score < UserData.scores[FINGER_MORA]) {
+                    setUserData({ ...UserData, scores: { ...UserData.scores, FINGER_MORA: score } })
                     UpdateMutation({
                         variables: {
                             data: {
                                 name: UserData.username,
-                                game: "FINGER_MORA",
-                                score: (score/10) * 10,  //去除小數點後第三位
+                                game: FINGER_MORA,
+                                score: Math.floor(score/10) * 10,  //去除小數點後第三位
                             }
                         },
                     });
                 }
             } else {
-                setUserData({ ...UserData, scores: { ...UserData.scores, "FINGER_MORA": score } })
+                setUserData({ ...UserData, scores: { ...UserData.scores, FINGER_MORA: score } })
                 UpdateMutation({
                     variables: {
                         data: {
                             name: UserData.username,
-                            game: "FINGER_MORA",
-                            score: (score/10) * 10,  //去除小數點後第三位
+                            game: FINGER_MORA,
+                            score: Math.floor(score/10) * 10,  //去除小數點後第三位
                         }
                     },
                 });
@@ -205,10 +232,10 @@ function AppStreamCam({ setIsInstruction }) {
 
     return (
         <div className='background'>
-            <h3 className="loading-status">{countDown}{(!isCountDowning && isPlaying) ? (' ' + correctNum.toString() + ' left'): ''}</h3>
+            <h3 className="loading-status">{countDown}{(!isCountDowning && isPlaying) ? ('   ' + correctNum.toString() + ' left'): ''}</h3>
             <h3 className="loading-status">{
                 (isInit) ?
-                    "The game is laoding... please wait": 
+                    "The game is laoding... please wait...it will take some time...": 
                     (isPlaying) ? 
                         (isCountDowning) ? 
                             "look here --> The game will soon be started <-- look here":
@@ -221,6 +248,7 @@ function AppStreamCam({ setIsInstruction }) {
                                         "error!!!":
                         "Press start button to start"
             }</h3>
+            <br />
             <div className="game-container">
                 <div className="videoWrapper">
                     <video autoPlay={true} className="RPSvideo" controls></video>
@@ -237,7 +265,7 @@ function AppStreamCam({ setIsInstruction }) {
                     }></img>
                 </div>
             </div>
-            <div className="btn-container">
+            <div className="btn-container-RPS">
                 <button className="btn" onClick={() => { 
                     handleStop();
                     setIsInstruction(true);
@@ -247,7 +275,7 @@ function AppStreamCam({ setIsInstruction }) {
             </div>
             <br />
             {/* <h3 className="gesture-score">{gestureName}, {gestureScore}</h3> */}
-            <h3 className="gesture-score">{'your score: ' + score.toString()}</h3>
+            <h3 className="gesture-score">{'your time: ' + score2Time(score)}</h3>
         </div>
     );
 }
