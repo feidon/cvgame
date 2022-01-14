@@ -17,9 +17,8 @@ import { USER_QUERY, USER_SUBSCRIPTION } from "../graphql";
 import { UserContext } from "./App";
 import Layout from "../components/Layout/Layout";
 
-
 // Use these as game name
-import { FINGER_EXERCISE, FINGER_MATH, FINGER_MORA, POSE, POSE_FLAPPY_BIRD } from "../constants";
+import { FINGER_EXERCISE, FINGER_MORA, POSE_FLAPPY_BIRD } from "../constants";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -48,6 +47,13 @@ const TabPanel = (props) => {
     },
   });
 
+  const gettime = (time) => {
+    const minute = ("0" + Math.floor((time / 60000) % 60)).slice(-2);
+    const second = ("0" + Math.floor((time / 1000) % 60)).slice(-2);
+    const milsec = ("0" + ((time / 10) % 100)).slice(-2);
+    return `${minute}:${second}:${milsec}`;
+  };
+
   useEffect(() => {
     subscribeToMore({
       document: USER_SUBSCRIPTION,
@@ -61,7 +67,6 @@ const TabPanel = (props) => {
 
   if (loading) return <Box>Loading...</Box>;
   if (error) return <Box>Error! ${error.message}</Box>;
-  if (data) console.log(data);
   return (
     <div
       role="tabpanel"
@@ -76,7 +81,9 @@ const TabPanel = (props) => {
             <TableHead>
               <StyledTableRow>
                 <StyledTableCell align="center">Name</StyledTableCell>
-                <StyledTableCell align="center">{index === POSE_FLAPPY_BIRD ? "Score" : "Time"}</StyledTableCell>
+                <StyledTableCell align="center">
+                  {index === POSE_FLAPPY_BIRD ? "Score" : "Time"}
+                </StyledTableCell>
               </StyledTableRow>
             </TableHead>
             <TableBody>
@@ -88,7 +95,11 @@ const TabPanel = (props) => {
                   <StyledTableCell align="center">{name}</StyledTableCell>
                   <StyledTableCell align="center">
                     {scores.map((e) => {
-                      return e.game === index ? e.score : null;
+                      return e.game === index
+                        ? e.game === POSE_FLAPPY_BIRD
+                          ? e.score
+                          : gettime(e.score)
+                        : null;
                     })}
                   </StyledTableCell>
                 </StyledTableRow>
@@ -126,7 +137,12 @@ const LeaderBoard = (props) => {
             alignItems: "center",
           }}
         >
-          <Button variant="contained" onClick={() => { navigate(`/login/${UserData.username}/lobby`) }} >
+          <Button
+            variant="contained"
+            onClick={() => {
+              navigate(`/login/${UserData.username}/lobby`);
+            }}
+          >
             Back
           </Button>
         </Box>
@@ -137,14 +153,10 @@ const LeaderBoard = (props) => {
         >
           <Tabs value={tabvalue} onChange={handleChange} variant="fullWidth">
             <Tab value={FINGER_MORA} label={FINGER_MORA} />
-            <Tab value={FINGER_MATH} label={FINGER_MATH} />
-            <Tab value={POSE} label={POSE} />
             <Tab value={FINGER_EXERCISE} label={FINGER_EXERCISE} />
             <Tab value={POSE_FLAPPY_BIRD} label={POSE_FLAPPY_BIRD} />
           </Tabs>
           <TabPanel value={tabvalue} index={FINGER_MORA} />
-          <TabPanel value={tabvalue} index={FINGER_MATH} />
-          <TabPanel value={tabvalue} index={POSE} />
           <TabPanel value={tabvalue} index={FINGER_EXERCISE} />
           <TabPanel value={tabvalue} index={POSE_FLAPPY_BIRD} />
         </Box>

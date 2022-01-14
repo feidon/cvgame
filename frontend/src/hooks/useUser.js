@@ -5,8 +5,7 @@ import {
   UPDATE_MUTATION,
 } from "../graphql/index";
 import { useMutation } from "@apollo/react-hooks";
-import { useLocation,useNavigate } from "react-router-dom";
-import { astFromValue } from "graphql";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const LOCALSTORAGE_KEY = "save-me";
 
@@ -33,7 +32,7 @@ const useUser = () => {
   const [timerOn, setTimerOn] = useState(false);
 
   const navigate = useNavigate();
-  const location = useLocation()
+  const location = useLocation();
   // time count : you can direct set variable like this:
   // setTimerOn(true)  => Start
   // setTimerOn(false) => Stop
@@ -51,18 +50,18 @@ const useUser = () => {
     return () => clearInterval(interval);
   }, [timerOn]);
 
-    // 重整頁面就會回到login Page
-    useEffect(() => {
-      console.log(location.pathname)
-      if (!UserData.signed && location.pathname!=="/register") {
-        navigate(`/`)
-      }
-    }, [])
+  // 重整頁面就會回到login Page
+  useEffect(() => {
+    console.log(location.pathname);
+    if (!UserData.signed && location.pathname !== "/register") {
+      navigate(`/`);
+    }
+  }, []);
 
   // handle user data change:
   // input : Object key, Object value
   const handleChangeUserData = (key, value) => {
-    setDisplayError(false);
+    // setDisplayError(false);
     if (key === "username" || key === "password") {
       setUserData({
         ...UserData,
@@ -128,7 +127,7 @@ const useUser = () => {
           name: UserData.username,
           game: game,
           score: time,
-        }
+        },
       },
     });
   };

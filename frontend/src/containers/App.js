@@ -2,30 +2,31 @@
 import "./App.css";
 import LeaderBoard from "./LeaderBoard";
 import { Routes, Route, Navigate } from "react-router-dom";
-import CssBaseline from '@mui/material/CssBaseline';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
+import CssBaseline from "@mui/material/CssBaseline";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
 import useUser from "../hooks/useUser";
 import { createContext } from "react";
 import Lobby from "./Lobby";
 import Login from "./Login";
-import Register from "./Register"
+import Register from "./Register";
 import About from "./About";
 import FlappyBirdGamePage from "./flappybird/GamePage";
 import RockPaperScissors from "./rock-paper-scissors/GamePage";
+import Fingerexer from "./fingerexercise/GamePage";
 
 const theme = createTheme({
   palette: {
-    mode:"dark",
+    mode: "dark",
     primary: {
-      main: '#8893ef',
+      main: "#8893ef",
     },
     secondary: {
-      main: '#7f3b56',
+      main: "#7f3b56",
     },
-    background:{
-      paper: '#303030',
-      default: '#303030',
-    }
+    background: {
+      paper: "#303030",
+      default: "#303030",
+    },
   },
 });
 
@@ -46,7 +47,7 @@ function App() {
     handleLogin,
     handleUpdate,
     handleLogout,
-    handleSignUp
+    handleSignUp,
   } = useUser();
   return (
     <UserContext.Provider
@@ -64,26 +65,36 @@ function App() {
         handleLogin,
         handleUpdate,
         handleLogout,
-        handleSignUp
+        handleSignUp,
       }}
     >
       <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <Routes>
-        <Route exact path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />}/>
-        
-        <Route
-          path="/login/:username/leaderboard"
-          element={<LeaderBoard  />}
-        />
-        <Route path="/login/:username/lobby" element={<Lobby />} />
-        <Route path="/login/:username/about" element={<About />}/>
-        <Route path="/login/:username/pose-flappy-bird" element={<FlappyBirdGamePage />} />
-        <Route path="/login/:username/rock-paper-scissors" element={<RockPaperScissors />} />
-        <Route path="/" element={<Navigate to="/login" />} />
-        <Route path="*" element={<Navigate to="/login" />} /> 
-      </Routes>
+        <CssBaseline />
+        <Routes>
+          <Route exact path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+
+          <Route
+            path="/login/:username/leaderboard"
+            element={<LeaderBoard />}
+          />
+          <Route path="/login/:username/lobby" element={<Lobby />} />
+          <Route path="/login/:username/about" element={<About />} />
+          <Route
+            path="/login/:username/pose-flappy-bird"
+            element={<FlappyBirdGamePage />}
+          />
+          <Route
+            path="/login/:username/rock-paper-scissors"
+            element={<RockPaperScissors />}
+          />
+          <Route
+            path="/login/:username/fingerexercise"
+            element={<Fingerexer />}
+          />
+          <Route path="/" element={<Navigate to="/login" />} />
+          <Route path="*" element={<Navigate to="/login" />} />
+        </Routes>
       </ThemeProvider>
     </UserContext.Provider>
   );

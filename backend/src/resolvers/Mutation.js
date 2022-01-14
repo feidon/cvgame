@@ -80,7 +80,7 @@ const Mutation = {
       .sort({ [`scores.${data.game}`]: 1 })
       .limit(30);
 
-    pubSub.publish(`${data.game}`, {
+    pubSub.publish("LeaderBoard", {
       userUpdated: {
         mutation: "UPDATED",
         data: users,

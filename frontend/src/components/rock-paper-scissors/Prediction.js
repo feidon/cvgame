@@ -1,8 +1,8 @@
-import * as handpose from '@tensorflow-models/handpose';
-import '@tensorflow/tfjs-backend-webgl';
-import * as imgs from './SampleImage';
-import * as fp from './fingerpose-master';
-import { RockGesture, PaperGesture, ScissorsGesture } from '../../graphql/Gestures';
+import * as handpose from "@tensorflow-models/handpose";
+import "@tensorflow/tfjs-backend-webgl";
+import * as imgs from "./SampleImage";
+import * as fp from "./fingerpose-master";
+import { RockGesture, PaperGesture, ScissorsGesture } from "./Gestures";
 
 // const GE = new fp.GestureEstimator([
 //     fp.Gestures.VictoryGesture,
@@ -10,48 +10,46 @@ import { RockGesture, PaperGesture, ScissorsGesture } from '../../graphql/Gestur
 // ]);
 
 const GE = new fp.GestureEstimator([
-    RockGesture,
-    PaperGesture,
-    ScissorsGesture,
-])
+  RockGesture,
+  PaperGesture,
+  ScissorsGesture,
+]);
 
 let handposeModel;
 let intervalID;
 
 const Prediction = {
+  init: async function () {
+    // Load the MediaPipe handpose model.
+    console.log("Loading handpose model...");
+    handposeModel = await handpose.load();
+    console.log("Model loaded");
 
-    init: async function() {
+    console.log("Warm up model");
+    const sample = await imgs.SampleImage.create();
+    console.log("smaple created");
+    await handposeModel.estimateHands(sample, false);
+    const sample1 = await imgs.SampleImage1.create();
+    console.log("smaple1 created");
+    await handposeModel.estimateHands(sample1, false);
+    console.log("Model is hot!");
+  },
 
-        // Load the MediaPipe handpose model.
-        console.log("Loading handpose model...")
-        handposeModel = await handpose.load();
-        console.log("Model loaded");
-    
-        console.log("Warm up model");
-        const sample = await imgs.SampleImage.create();
-        console.log("smaple created");
-        await handposeModel.estimateHands(sample, false);
-        const sample1 = await imgs.SampleImage1.create();
-        console.log("smaple1 created");
-        await handposeModel.estimateHands(sample1, false);
-        console.log("Model is hot!");
-    },
-    
-    main: async function(setGestureName, setGestureScore) {    
-        console.log('main()');
-    
-        const startPredict = () => {
-    
-            intervalID = setInterval(async () => {
-                // Pass in a video stream (or an image, canvas, or 3D tensor) to obtain a
-                // hand prediction from the MediaPipe graph.
-                // console.log('predicting...');
-                const predictions = await handposeModel.estimateHands(document.querySelector("video"));
-                // console.log('prediction done');
-    
-                if (predictions.length > 0) {
-    
-                    /*
+  main: async function (setGestureName, setGestureScore) {
+    console.log("main()");
+
+    const startPredict = () => {
+      intervalID = setInterval(async () => {
+        // Pass in a video stream (or an image, canvas, or 3D tensor) to obtain a
+        // hand prediction from the MediaPipe graph.
+        // console.log('predicting...');
+        const predictions = await handposeModel.estimateHands(
+          document.querySelector("video")
+        );
+        // console.log('prediction done');
+
+        if (predictions.length > 0) {
+          /*
                     `predictions` is an array of objects describing each detected hand, for example:
                     [
                     {
@@ -76,40 +74,38 @@ const Prediction = {
                     }
                     ]
                     */
-    
-                    for (let i = 0; i < predictions.length; i++) {
-                        const keypoints = predictions[i].landmarks;
 
-                        const estimatedGestures = GE.estimate(predictions[i].landmarks, 9);
-                        const { posData, gestures } = estimatedGestures;
-                        if (gestures.length > 0) {
-                            // console.log(gestures[0].name);
-                            setGestureName(gestures[0].name);
-                            setGestureScore(gestures[0].score);
-                        }
-                        else {
-                            // console.log('none');
-                            setGestureName('none');
-                            setGestureScore(0);
-                        }
+          for (let i = 0; i < predictions.length; i++) {
+            const keypoints = predictions[i].landmarks;
 
-                        // Log hand keypoints.
-                        // for (let i = 0; i < keypoints.length; i++) {
-                        //     const [x, y, z] = keypoints[i];
-                        //     console.log(`Keypoint ${i}: [${x}, ${y}, ${z}]`);
-                        // }
-                    }
-                }
-            }, 200);
+            const estimatedGestures = GE.estimate(predictions[i].landmarks, 9);
+            const { posData, gestures } = estimatedGestures;
+            if (gestures.length > 0) {
+              // console.log(gestures[0].name);
+              setGestureName(gestures[0].name);
+              setGestureScore(gestures[0].score);
+            } else {
+              // console.log('none');
+              setGestureName("none");
+              setGestureScore(0);
+            }
+
+            // Log hand keypoints.
+            // for (let i = 0; i < keypoints.length; i++) {
+            //     const [x, y, z] = keypoints[i];
+            //     console.log(`Keypoint ${i}: [${x}, ${y}, ${z}]`);
+            // }
+          }
         }
-    
-        startPredict();
-    },
+      }, 200);
+    };
 
-    stop: function() {
-        clearInterval(intervalID);
-    },
+    startPredict();
+  },
 
-}
+  stop: function () {
+    clearInterval(intervalID);
+  },
+};
 
 export default Prediction;
