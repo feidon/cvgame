@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
 import { UserContext } from "../App";
 import "./Instruction.css";
-import Flappy_Bird_icon from "../../img/fingerexer.jpg";
-import pose_detect from "../../img/zero.png";
+import fingerexer from "../../img/fingerexer.jpg";
+import zero from "../../img/zero.png";
 import { useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
 
@@ -10,26 +10,26 @@ const Instruction = ({ setPrePare }) => {
   const { UserData } = useContext(UserContext);
   const navigate = useNavigate();
   return (
-    <div className="background">
-      <h1 className="title">
+    <div className="exer-background">
+      <h1 className="exer-title">
         {" "}
         Play Finger Exercise with Hand Pose Detection !{" "}
       </h1>
-      <div className="container-instruction">
-        <ul className="instruction-container">
-          <li className="instruction">
+      <div className="exer-container-instruction">
+        <ul className="exer-instruction-container">
+          <li className="exer-instruction">
             遊戲說明:
             <br />
             玩家進入Finger Exercise遊戲頁面後，前置鏡頭便會偵測玩家的Hand Pose，
             當看到畫面中有辨識結果便可以開始進行遊戲!
           </li>
-          <li className="instruction">
+          <li className="exer-instruction">
             操作說明:
             <br />
             此遊戲藉由前置鏡頭偵測玩家的Hand Pose，根據左邊圖片由左至右開始完成
             完成後計算時間即為分數
           </li>
-          <li className="instruction">
+          <li className="exer-instruction">
             疑難排解: <br />
             Q1: 若我的電腦沒有前置鏡頭怎麼辦？
             <br />
@@ -41,14 +41,14 @@ const Instruction = ({ setPrePare }) => {
             並且比出手勢時，不用握得太緊，避免遮住其他手指
             此模型需要看到所有手指，才比較穩定。
           </li>
-          <li className="instruction">是不是棒透了!</li>
+          <li className="exer-instruction">是不是棒透了!</li>
         </ul>
-        <div className="image-container">
-          <img className="image" src={Flappy_Bird_icon} alt="Flappy Bird" />
-          <img className="image" src={pose_detect} alt="Pose Detection" />
+        <div className="exer-image-container">
+          <img className="exer-image" src={fingerexer} alt="fingerexer" />
+          <img className="exer-image" src={zero} alt="zero" />
         </div>
       </div>
-      <div className="btn-container">
+      <div className="exer-btn-container">
         <Button
           variant="contained"
           sx={{ mx: 3 }}
