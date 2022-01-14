@@ -65,6 +65,7 @@ const TabPanel = (props) => {
     });
   });
 
+  if (data) console.log(data.users);
   if (loading) return <Box>Loading...</Box>;
   if (error) return <Box>Error! ${error.message}</Box>;
   return (

@@ -104,7 +104,7 @@ const SideBar = ({ open, setOpen, toggleSideBar }) => {
             <ListItemIcon>
               <Avatar alt="hands" src={require("../../img/fingerexer.jpg")} />
             </ListItemIcon>
-            <ListItemText primary="fingerexercise" />
+            <ListItemText primary="Finger-Exercise" />
           </ListItem>
 
           {/* LeaderBoard */}

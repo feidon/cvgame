@@ -123,10 +123,23 @@ const Game = ({ setPrePare }) => {
   }, [playing,])
 
   useEffect(() => {
-    if (UserData.scores.hasOwnProperty("POSE_FLAPPY_BIRD")) {  //玩過 Pose Flappy Bird
-      if (score > UserData.scores["POSE_FLAPPY_BIRD"]) {
+    (async () => {
+      if (UserData.scores.hasOwnProperty("POSE_FLAPPY_BIRD")) {  //玩過 Pose Flappy Bird
+        if (score > UserData.scores["POSE_FLAPPY_BIRD"]) {
+          setUserData({ ...UserData, scores: { ...UserData.scores, "POSE_FLAPPY_BIRD": score } })
+          await UpdateMutation({
+            variables: {
+              data: {
+                name: UserData.username,
+                game: "POSE_FLAPPY_BIRD",
+                score: score,
+              }
+            },
+          });
+        }
+      } else {
         setUserData({ ...UserData, scores: { ...UserData.scores, "POSE_FLAPPY_BIRD": score } })
-        UpdateMutation({
+        await UpdateMutation({
           variables: {
             data: {
               name: UserData.username,
@@ -136,20 +149,34 @@ const Game = ({ setPrePare }) => {
           },
         });
       }
-    } else {
-      setUserData({ ...UserData, scores: { ...UserData.scores, "POSE_FLAPPY_BIRD": score } })
-      UpdateMutation({
-        variables: {
-          data: {
-            name: UserData.username,
-            game: "POSE_FLAPPY_BIRD",
-            score: score,
-          }
-        },
-      });
-    }
+    })()
+    // if (UserData.scores.hasOwnProperty("POSE_FLAPPY_BIRD")) {  //玩過 Pose Flappy Bird
+    //   if (score > UserData.scores["POSE_FLAPPY_BIRD"]) {
+    //     setUserData({ ...UserData, scores: { ...UserData.scores, "POSE_FLAPPY_BIRD": score } })
+    //     UpdateMutation({
+    //       variables: {
+    //         data: {
+    //           name: UserData.username,
+    //           game: "POSE_FLAPPY_BIRD",
+    //           score: score,
+    //         }
+    //       },
+    //     });
+    //   }
+    // } else {
+    //   setUserData({ ...UserData, scores: { ...UserData.scores, "POSE_FLAPPY_BIRD": score } })
+    //   UpdateMutation({
+    //     variables: {
+    //       data: {
+    //         name: UserData.username,
+    //         game: "POSE_FLAPPY_BIRD",
+    //         score: score,
+    //       }
+    //     },
+    //   });
+    // }
   }, [playing])
-
+  console.log(UserData.scores)
   // 創建一根新的pipe加入pipeRef.current.list
   const creatNewPipe = (now) => {
     const pipeLowerShift = GameParamters.pipings.shiftRange.y.min + (GameParamters.pipings.shiftRange.y.max - GameParamters.pipings.shiftRange.y.min) * Math.random()  // 下排pipe向上平移量
@@ -244,12 +271,12 @@ const Game = ({ setPrePare }) => {
 
 
   return (
-    <div className="background" onMouseDown={flap}>
-      <h1 className="loading-status">Pose Flappy Bird Game</h1>
-      <div className="container-game" >
-        <div className="gameWrapper">
-          <div className="game">
-            <div className="scene" >
+    <div className="background-flappybird" onMouseDown={flap}>
+      <h1 className="loading-status-flappybird">Pose Flappy Bird Game</h1>
+      <div className="container-game-flappybird" >
+        <div className="gameWrapper-flappybird">
+          <div className="game-flappybird">
+            <div className="scene-flappybird" >
               {(playing) ? <div className="score">{score}</div> : ""}
               <Bird style={style} />
               {
@@ -261,19 +288,19 @@ const Game = ({ setPrePare }) => {
             </div>
           </div>
         </div>
-        <div className="videoWrapper">
-          <Webcam ref={webcamRef} className="video" />
-          <canvas ref={canvasRef} className="video" />
+        <div className="videoWrapper-flappybird">
+          <Webcam ref={webcamRef} className="video-flappybird" />
+          <canvas ref={canvasRef} className="video-flappybird" />
         </div>
       </div>
-      <h3 className="loading-status">{
+      <h3 className="loading-status-flappybird">{
         !playing ?
-          loading ? "Loading MoveNet..." :
-            detecting ? "MoveNet is ready, plseae enjoy the game !" :
-              "MoveNet is detecting your pose, please wait a moment..." :
+          loading ? "-> Loading MoveNet... <-" :
+            detecting ? "-> MoveNet is ready, plseae enjoy the game ! <-" :
+              "-> MoveNet is detecting your pose, please wait a moment... <-" :
           "Wave your arm !"
       }</h3>
-      <div className="btn-container">
+      <div className="btn-container-flappybird">
         <Button variant="contained" sx={{ mx: 3, px: 3, backgroundColor: (theme) => theme.palette.secondary}} onClick={() => { setPrePare(false) }}>Back</Button>
         <Button variant="contained" sx={{ mx: 3, px: 3 }} onClick={() => { onPlay() }}>Play</Button>
       </div>

@@ -95,7 +95,7 @@ const Header = ({ open, setOpen, toggleSideBar }) => {
 
                 {/* UserIcon */}
                 <Box sx={{ flexGrow: 0 }}>
-                    <Tooltip title="Account">
+                    <Tooltip title={`${UserData.username}`}>
                         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                             <AccountCircleRoundedIcon sx={{ fontSize: "30px" }} />
                         </IconButton>
