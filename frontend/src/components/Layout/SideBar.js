@@ -85,7 +85,7 @@ const SideBar = ({ open, setOpen, toggleSideBar }) => {
                     
                     {/* LeaderBoard */}
                     <Divider /> 
-                    <ListSubheader inset>Static</ListSubheader>
+                    <ListSubheader inset>Statistics</ListSubheader>
                     <ListItem button onClick={() => { navigate(`/login/${UserData.username}/leaderboard`)}}>
                         <ListItemIcon sx={{ pl: 1 }}>
                             <SportsScoreIcon />
