@@ -28,7 +28,8 @@ const Lobby = () => {
             <GameCard
               imageURL={require("../img//Rock_Paper_Scissors_icon.png")}
               title={"Rock-Paper-Scissors"}
-              description={"Use one of your hands to play rock-paper-scissors with the computer! The game is not finished yet ><"}
+              description={"Use one of your hands to play rock-paper-scissors with the computer! \
+        You will ask to win / lose / tie with the computer! React as quickly as you can to stay on the leaderboard!!!"}
               onClick={() => { navigate(`/login/${UserData.username}/rock-paper-scissors`) }}
             />
           </Grid>
