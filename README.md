@@ -4,9 +4,11 @@ Computer Vision Game Playground
 Installation
 ------------
 
-Clone this repo first
+- Clone this repo first
 
-Install frontend & backend packages with yarn
+- Install frontend & backend packages
+
+yarn
 ```
 # in './Playground'
 cd frontend && yarn
@@ -14,7 +16,7 @@ cd frontend && yarn
 # in './Playground'
 cd backend && yarn
 ```
-Or with npm
+npm
 ```
 # in './Playground'
 cd frontend && npm inatll
@@ -22,8 +24,6 @@ cd frontend && npm inatll
 # in './Playground'
 cd backend && npm install
 ```
-
----
 
 Run in localhost
 ----------------
@@ -41,7 +41,7 @@ SALT_ROUNDS= (you can set SALT_ROUNDS=10)
 ```
 yarn backend
 ```
-Or
+or
 ```
 npm run start
 ```
@@ -49,14 +49,12 @@ npm run start
 ```
 yarn frontend
 ```
-Or
+or
 ```
 npm start
 ```
 7. Make sure your backend connect to your [MongoDB](<https://www.mongodb.com>)
 8. Open http://localhost:3000 with your browser and you should be able to start plaing our games!
-
----
 
 Test
 ----
@@ -65,8 +63,7 @@ Test
 - 可正常從 Lobby 進入各個遊戲
 - 可正常從左側 DashBoard 進入遊戲以及 LeaderBoard
 - 各個遊戲可以合理的判斷手勢與姿勢
-
----
+- 分數與時間計算無誤且反應於 LeaderBoard
 
 Teamwork
 --------
