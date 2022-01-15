@@ -18,8 +18,7 @@ const Layout = (props) => {
             <Sidebar open={open} setOpen={setOpen} toggleSideBar={toggleSideBar} />
             <Box
                 sx={{
-                    flexGrow: 1, height: '100vh',
-                    // overflow: 'auto',  // 只有Box會有滾輪
+                    flexGrow: 1, height: '100vh', // overflow: 'auto',  // 只有Box會有滾輪
                 }}
             >
                 <Toolbar />
@@ -29,7 +28,6 @@ const Layout = (props) => {
                 <Footer/>
             </Box>
         </Box>
-
     )
 
 }

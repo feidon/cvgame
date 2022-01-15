@@ -74,9 +74,6 @@ const Register = () => {
         }
 
     }
-    console.log(username)
-    console.log(password)
-    console.log(confirmPassword)
     return (
         <Container component="main" maxWidth="xs" >
             <Box

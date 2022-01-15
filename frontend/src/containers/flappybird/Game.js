@@ -150,31 +150,6 @@ const Game = ({ setPrePare }) => {
         });
       }
     })()
-    // if (UserData.scores.hasOwnProperty("POSE_FLAPPY_BIRD")) {  //玩過 Pose Flappy Bird
-    //   if (score > UserData.scores["POSE_FLAPPY_BIRD"]) {
-    //     setUserData({ ...UserData, scores: { ...UserData.scores, "POSE_FLAPPY_BIRD": score } })
-    //     UpdateMutation({
-    //       variables: {
-    //         data: {
-    //           name: UserData.username,
-    //           game: "POSE_FLAPPY_BIRD",
-    //           score: score,
-    //         }
-    //       },
-    //     });
-    //   }
-    // } else {
-    //   setUserData({ ...UserData, scores: { ...UserData.scores, "POSE_FLAPPY_BIRD": score } })
-    //   UpdateMutation({
-    //     variables: {
-    //       data: {
-    //         name: UserData.username,
-    //         game: "POSE_FLAPPY_BIRD",
-    //         score: score,
-    //       }
-    //     },
-    //   });
-    // }
   }, [playing])
   console.log(UserData.scores)
   // 創建一根新的pipe加入pipeRef.current.list
