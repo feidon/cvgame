@@ -42,11 +42,8 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 const TabPanel = (props) => {
   const { value, index, loading, error, data, subscribeToMore, ...other } =
     props;
-  // const { loading, error, data, subscribeToMore } = useQuery(USER_QUERY, {
-  //   variables: {
-  //     game: index,
-  //   },
-  // });
+
+  let tempdata;
 
   const gettime = (time) => {
     const minute = ("0" + Math.floor((time / 60000) % 60)).slice(-2);
@@ -55,18 +52,33 @@ const TabPanel = (props) => {
     return `${minute}:${second}:${milsec}`;
   };
 
-  // useEffect(() => {
-  //   subscribeToMore({
-  //     document: USER_SUBSCRIPTION,
-  //     variables: { game: index },
-  //     updateQuery: (prev, { subscriptionData }) => {
-  //       if (!subscriptionData.data) return prev;
-  //       console.log(prev.users);
-  //       console.log(subscriptionData.data.userUpdated.data);
-  //       return { users: subscriptionData.data.userUpdated.data };
-  //     },
-  //   });
-  // }, [subscribeToMore]);
+  const getdata = (users, game) => {
+    let filtdata = users.map((user) => {
+      if (user.scores) {
+        let gamescore = user.scores.filter((score) => score.game === game);
+        console.log(gamescore);
+        if (gamescore.length > 0) {
+          if (game === POSE_FLAPPY_BIRD) {
+            return [user.name, gamescore[0].score];
+          } else {
+            return [user.name, gettime(gamescore[0].score)];
+          }
+        }
+      }
+    });
+    console.log(filtdata);
+    if (game === POSE_FLAPPY_BIRD) {
+      return filtdata.sort((a, b) => b[1] - a[1]);
+    } else {
+      return filtdata.sort((a, b) => a[1] - b[1]);
+    }
+  };
+
+  if (data) {
+    tempdata = getdata(data.users, index);
+  }
+
+  console.log(tempdata);
 
   // if (data) console.log(data.users);
   if (loading) return <Box>Loading...</Box>;
@@ -91,26 +103,16 @@ const TabPanel = (props) => {
               </StyledTableRow>
             </TableHead>
             <TableBody>
-              {data.users.map(({ name, scores }) => {
-                if (scores.filter((ele) => ele.game === index).length > 0) {
-                  return (
-                    <StyledTableRow
-                      key={name}
-                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                    >
-                      <StyledTableCell align="center">{name}</StyledTableCell>
-                      <StyledTableCell align="center">
-                        {scores.map((e) => {
-                          return e.game === index
-                            ? e.game === POSE_FLAPPY_BIRD
-                              ? e.score
-                              : gettime(e.score)
-                            : null;
-                        })}
-                      </StyledTableCell>
-                    </StyledTableRow>
-                  );
-                }
+              {tempdata.map((ele) => {
+                return ele ? (
+                  <StyledTableRow
+                    key={ele[0]}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    <StyledTableCell align="center">{ele[0]}</StyledTableCell>
+                    <StyledTableCell align="center">{ele[1]}</StyledTableCell>
+                  </StyledTableRow>
+                ) : null;
               })}
             </TableBody>
           </Table>
