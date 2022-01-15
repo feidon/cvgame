@@ -6,6 +6,9 @@
   "author": "Yu-Hsuan Fei <r09521515@ntu.edu.tw>",
   "license": "MIT",
   "scripts": {
+    "start": "cd ./backend && npm start",
+    "build": "react-scripts build",
+    "start_react": "react-scripts start",
     "frontend": "cd ./frontend && npm start",
     "backend": "cd ./backend && npm start"
   }
