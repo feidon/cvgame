@@ -2,7 +2,7 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://feidon.github.io/Playground/",
+  "homepage": "https://feidon.github.io/cvgame/",
   "dependencies": {
     "@apollo/client": "^3.5.6",
     "@apollo/react-hooks": "^4.0.0",
