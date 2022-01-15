@@ -217,7 +217,7 @@ const Login = () => {
                 component="button"
                 variant="body2"
                 underline="hover"
-                onClick={navigate(`/register`)}
+                onClick={() => navigate(`/register`)}
               >
                 {"Don't have an account? Sign Up"}
               </Link>

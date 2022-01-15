@@ -222,7 +222,7 @@ const Register = () => {
                 component="button"
                 variant="body2"
                 underline="hover"
-                onClick={navigate(`/login`)}
+                onClick={() => navigate(`/login`)}
               >
                 {"Already have an account? Sign in"}
               </Link>
