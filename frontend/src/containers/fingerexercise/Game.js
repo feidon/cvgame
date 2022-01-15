@@ -83,8 +83,8 @@ function Game({ setPrePare }) {
   const handlist = ["zero", "one", "two", "three", "four", "five"];
   // const canvasRef = useRef(null);
   const [playerhand, setPlayerhand] = useState("");
-  const [Gesarray, setGesarray] = useState(Prediction.getrandomarr(60));
-  const [Gesarraybool, setGesarraybool] = useState(Array(60).fill(false));
+  const [Gesarray, setGesarray] = useState(Prediction.getrandomarr(30));
+  const [Gesarraybool, setGesarraybool] = useState(Array(30).fill(false));
   const [start, setStart] = useState(false);
   const [UpdateMutation] = useMutation(UPDATE_MUTATION);
   const [time, setTime] = useState(0);
@@ -177,7 +177,7 @@ function Game({ setPrePare }) {
             } else {
               if (!Gesarraybool[idxRef.current]) {
                 if (handlist[Gesarray[idxRef.current]] === playerGesture) {
-                  const newarr = Array(60)
+                  const newarr = Array(30)
                     .fill(false)
                     .fill(true, 0, idxRef.current);
                   newarr[idxRef.current] = true;
@@ -236,24 +236,26 @@ function Game({ setPrePare }) {
     if (start) {
       setTimerOn(true);
     } else {
-      setGesarray(Prediction.getrandomarr(60));
-      setGesarraybool(Array(60).fill(false));
+      setGesarray(Prediction.getrandomarr(30));
+      setGesarraybool(Array(30).fill(false));
       setTimerOn(false);
-      if (UserData.scores.hasOwnProperty(FINGER_EXERCISE)) {
-        if (time < UserData.scores[FINGER_EXERCISE]) {
-          setUserData({
-            ...UserData,
-            scores: { ...UserData.scores, [FINGER_EXERCISE]: time },
-          });
-          UpdateMutation({
-            variables: {
-              data: {
-                name: UserData.username,
-                game: FINGER_EXERCISE,
-                score: time,
+      if (time !== 0) {
+        if (UserData.scores.hasOwnProperty(FINGER_EXERCISE)) {
+          if (time < UserData.scores[FINGER_EXERCISE]) {
+            setUserData({
+              ...UserData,
+              scores: { ...UserData.scores, [FINGER_EXERCISE]: time },
+            });
+            UpdateMutation({
+              variables: {
+                data: {
+                  name: UserData.username,
+                  game: FINGER_EXERCISE,
+                  score: time,
+                },
               },
-            },
-          });
+            });
+          }
         } else {
           setUserData({
             ...UserData,

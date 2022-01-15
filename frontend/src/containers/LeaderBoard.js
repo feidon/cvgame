@@ -91,23 +91,27 @@ const TabPanel = (props) => {
               </StyledTableRow>
             </TableHead>
             <TableBody>
-              {data.users.map(({ name, scores }) => (
-                <StyledTableRow
-                  key={name}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                >
-                  <StyledTableCell align="center">{name}</StyledTableCell>
-                  <StyledTableCell align="center">
-                    {scores.map((e) => {
-                      return e.game === index
-                        ? e.game === POSE_FLAPPY_BIRD
-                          ? e.score
-                          : gettime(e.score)
-                        : null;
-                    })}
-                  </StyledTableCell>
-                </StyledTableRow>
-              ))}
+              {data.users.map(({ name, scores }) => {
+                if (scores.filter((ele) => ele.game === index).length > 0) {
+                  return (
+                    <StyledTableRow
+                      key={name}
+                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    >
+                      <StyledTableCell align="center">{name}</StyledTableCell>
+                      <StyledTableCell align="center">
+                        {scores.map((e) => {
+                          return e.game === index
+                            ? e.game === POSE_FLAPPY_BIRD
+                              ? e.score
+                              : gettime(e.score)
+                            : null;
+                        })}
+                      </StyledTableCell>
+                    </StyledTableRow>
+                  );
+                }
+              })}
             </TableBody>
           </Table>
         </TableContainer>
