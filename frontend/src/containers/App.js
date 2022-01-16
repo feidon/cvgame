@@ -58,7 +58,7 @@ function App() {
       game: FINGER_MORA,
     },
   });
-  if (data) console.log(data);
+  // if (data) console.log(data);
   useEffect(() => {
     subscribeToMore({
       document: USER_SUBSCRIPTION,

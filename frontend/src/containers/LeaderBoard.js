@@ -56,7 +56,7 @@ const TabPanel = (props) => {
     let filtdata = users.map((user) => {
       if (user.scores) {
         let gamescore = user.scores.filter((score) => score.game === game);
-        console.log(gamescore);
+        // console.log(gamescore);
         if (gamescore.length > 0) {
           if (game === POSE_FLAPPY_BIRD) {
             return [user.name, gamescore[0].score];
@@ -66,7 +66,7 @@ const TabPanel = (props) => {
         }
       }
     });
-    console.log(filtdata);
+    // console.log(filtdata);
     if (game === POSE_FLAPPY_BIRD) {
       return filtdata.sort((a, b) => b[1] - a[1]);
     } else {
@@ -78,7 +78,7 @@ const TabPanel = (props) => {
     tempdata = getdata(data.users, index);
   }
 
-  console.log(tempdata);
+  // console.log(tempdata);
 
   // if (data) console.log(data.users);
   if (loading) return <Box>Loading...</Box>;
