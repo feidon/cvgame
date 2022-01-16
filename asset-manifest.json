@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/cvgame/static/css/main.84475130.css",
-    "main.js": "/cvgame/static/js/main.b86f3901.js",
+    "main.js": "/cvgame/static/js/main.e89a5799.js",
     "static/js/787.774729bc.chunk.js": "/cvgame/static/js/787.774729bc.chunk.js",
     "static/media/sample.png": "/cvgame/static/media/sample.2ba39fbaa7cc88de2032.png",
     "static/media/mora_pose.png": "/cvgame/static/media/mora_pose.f905dd972c62ed2530bd.png",
@@ -21,11 +21,11 @@
     "static/media/background.png": "/cvgame/static/media/background.cdbfb460bc6cc76a4b6a.png",
     "index.html": "/cvgame/index.html",
     "main.84475130.css.map": "/cvgame/static/css/main.84475130.css.map",
-    "main.b86f3901.js.map": "/cvgame/static/js/main.b86f3901.js.map",
+    "main.e89a5799.js.map": "/cvgame/static/js/main.e89a5799.js.map",
     "787.774729bc.chunk.js.map": "/cvgame/static/js/787.774729bc.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.84475130.css",
-    "static/js/main.b86f3901.js"
+    "static/js/main.e89a5799.js"
   ]
 }
