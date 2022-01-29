@@ -91,11 +91,11 @@ function App() {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Routes>
-          <Route exact path="/cvgame/login" element={<Login />} />
-          <Route path="/cvgame/register" element={<Register />} />
+          <Route exact path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
 
           <Route
-            path="/cvgame/login/:username/leaderboard"
+            path="/login/:username/leaderboard"
             element={
               <LeaderBoard
                 loading={loading}
@@ -105,22 +105,22 @@ function App() {
               />
             }
           />
-          <Route path="/cvgame/login/:username/lobby" element={<Lobby />} />
-          <Route path="/cvgame/login/:username/about" element={<About />} />
+          <Route path="/login/:username/lobby" element={<Lobby />} />
+          <Route path="/login/:username/about" element={<About />} />
           <Route
-            path="/cvgame/login/:username/pose-flappy-bird"
+            path="/login/:username/pose-flappy-bird"
             element={<FlappyBirdGamePage />}
           />
           <Route
-            path="/cvgame/login/:username/rock-paper-scissors"
+            path="/login/:username/rock-paper-scissors"
             element={<RockPaperScissors />}
           />
           <Route
-            path="/cvgame/login/:username/fingerexercise"
+            path="/login/:username/fingerexercise"
             element={<Fingerexer />}
           />
-          <Route path="/" element={<Navigate to="/cvgame/login" />} />
-          <Route path="*" element={<Navigate to="/cvgame/login" />} />
+          <Route path="/" element={<Navigate to="/login" />} />
+          <Route path="*" element={<Navigate to="/login" />} />
         </Routes>
       </ThemeProvider>
     </UserContext.Provider>
